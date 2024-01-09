@@ -20,10 +20,11 @@ class User(db.Model):
     user_posts = db.relationship("Post", back_populates="user")
 
     user_replies = db.relationship("Reply", back_populates="reply_user")
+
     # data model lecture example:
     # book = db.relationship("Book", back_populates="printings")
     # Class(Book) name and back_populates is how you relate the attributes in
-    # the difference classes to each other 
+    # the different classes to each other 
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'

@@ -1,4 +1,4 @@
-*.pyc
+*pyc*
 env
 secrets.sh
 user-stories.txt
