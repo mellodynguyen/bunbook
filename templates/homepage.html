@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Bunbook{% endblock %}
+
+{% block content %}
+
+Are you a new user? Create an account!
+<!-- Create account form -->
+<form id="create-account">
+    <label for="user-email">Email</label>
+    <input type="text" name="email" placeholder="Email" id="user-email">
+
+    <label for="user-password">Password</label>
+    <input type="text" name="Password" placeholder ="Password" id="user-password">
+</form>
+
+Already have an account?
+Log In!
+
+<form id="login-form">
+    <label for="user-email">Email</label>
+    <input type="text" name="email" placeholder="Email" id="user-email">
+
+    <label for="user-password">Password</label>
+    <input type="text" name="Password" placeholder ="Password" id="user-password">
+</form>
+
+{% endblock %}
