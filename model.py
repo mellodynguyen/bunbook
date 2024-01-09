@@ -58,6 +58,7 @@ class Images(db.Model):
     __tablename__ = "images"
 
     image_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     image_link = db.Column(db.String, nullable=False)
 
     def __repr__(self):
