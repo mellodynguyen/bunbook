@@ -3,6 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
+# give us a database (db) object 
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -79,15 +80,12 @@ class Images(db.Model):
         return f'<Images image_id={self.image_id} image_link={self.image_link}>'
 
 
-
-
-
 class PostLike(db.Model):
     """Likes for a Post"""
 
     __tablename__ = "postlikes"
 
-    like_id = db.column(db.Integer, autoincrement=True, primary_key=True)
+    like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     post_id = db.Column(db.Integer, db.ForeignKey("posts.post_id"))
 
@@ -117,9 +115,46 @@ class ReplyLike(db.Model):
 
     __tablename__ = "replylikes"
 
-    like_id = db.column(db.Integer, autoincrement=True, primary_key=True)
+    like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     post_id = db.Column(db.Integer, db.ForeignKey("replies.reply_id"))
 
     def __repr__(self):
         return f'<ReplyLike like_id{self.like_id}>'
+
+
+# flexibility for testing, multiple database - one for real people and 
+# one for fake people (accounts)
+# def connect_to_db(app, db_name):
+#     """Connect to database."""
+
+#     # The location of your database.
+#     # app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///{db_name}"
+#     app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///bunbook"
+#     # Enable to output the raw SQL executed by SQLAlchemy. Useful for debugging!
+#     app.config["SQLALCHEMY_ECHO"] = True
+#     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+#     # to connect the database with a Flask app
+#     db.app = app
+#     db.init_app(app)
+
+#     print("Connected to the db!")
+    
+
+def connect_to_db(flask_app, db_uri="postgresql:///bunbook", echo=True):
+    flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+    flask_app.config["SQLALCHEMY_ECHO"] = echo
+    flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    db.app = flask_app
+    db.init_app(flask_app)
+
+    print("Connected to the db!")
+
+if __name__ == "__main__":
+    from server import app
+
+    connect_to_db(app)
+    app.app_context().push()
+    db.create_all()
