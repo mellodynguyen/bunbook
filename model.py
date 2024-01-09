@@ -19,10 +19,9 @@ class User(db.Model):
     # a user can have many posts
     user_posts = db.relationship("Post", back_populates="user")
 
-
+    user_replies = db.relationship("Reply", back_populates="reply_user")
     # data model lecture example:
     # book = db.relationship("Book", back_populates="printings")
-
     # Class(Book) name and back_populates is how you relate the attributes in
     # the difference classes to each other 
 
@@ -48,15 +47,19 @@ class Post(db.Model):
 
     # one user can have many posts
     user = db.relationship("User", back_populates="user_posts")
+    # user_posts = db.relationship("Post", back_populates="user")
 
     # a post can have many replies
-    reply = db.relationship("Reply", back_populates="replies")
+    reply = db.relationship("Reply", back_populates="reply_post")
+    # reply_post = db.relationship("Post", back_populates="reply")
 
     # a post can have many likes
     like = db.relationship("PostLike", back_populates="postlikes")
+    # postlikes = db.relationship("Post", back_populates="like")
 
     # multiple images to a post (one to many) but there will only be one post
     images = db.relationship("Images", back_populates="post")
+    # post = db.relationship("Post", back_populates="images")
 
     # testing purposes:
     # post.images will be a list and will have an image objects, 
@@ -89,6 +92,8 @@ class PostLike(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     post_id = db.Column(db.Integer, db.ForeignKey("posts.post_id"))
 
+    postlikes = db.relationship("Post", back_populates="like")
+
     def __repr__(self):
         return f'<Like like_id{self.like_id}>'
 
@@ -107,8 +112,12 @@ class Reply(db.Model):
     # a reply can have many likes
     like = db.relationship("ReplyLike", back_populates="replylikes")
 
+    reply_post = db.relationship("Post", back_populates="reply")
+
+    reply_user = db.relationship("User", back_populates="user_replies")
+
     def __repr__(self):
-        return f'<Reply reply_id={self.reply_id}>'
+        return f'<Reply reply_id={self.reply_id} body_id={self.body}>'
 
 class ReplyLike(db.Model):
     """Likes for a Reply"""
@@ -117,7 +126,11 @@ class ReplyLike(db.Model):
 
     like_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
-    post_id = db.Column(db.Integer, db.ForeignKey("replies.reply_id"))
+    reply_id = db.Column(db.Integer, db.ForeignKey("replies.reply_id"))
+
+    replylikes = db.relationship("Reply", back_populates="like")
+
+
 
     def __repr__(self):
         return f'<ReplyLike like_id{self.like_id}>'
