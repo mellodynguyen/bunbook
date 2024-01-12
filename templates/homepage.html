@@ -6,21 +6,23 @@
 Are you a new user? Create an account!
 <br>
 <!-- Create account form -->
-    <form action="/createaccount" method="POST">
-        
+    <form id="createacct" action="/createaccount" method="POST">
+
+        <input type="text" name="screenname" placeholder="Username" id="screenname">
+
         <input type="text" name="email" placeholder="Email" id="user-email">
 
-        <input type="text" name="Password" placeholder ="Password" id="user-password">
+        <input type="text" name="password" placeholder ="Password" id="user-password">
         <input type="submit">
     </form>
 
 Already have an account? Log In:
 <br>
 <!-- Log In Form -->
-<form action="/login" method="POST">
+<form id ="login" action="/login" method="POST">
     <input type="text" name="email" placeholder="Email" id="user-email">
 
-    <input type="text" name="Password" placeholder ="Password" id="user-password">
+    <input type="text" name="password" placeholder ="Password" id="user-password">
     <input type="submit">
 </form>
 

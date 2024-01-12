@@ -6,6 +6,7 @@ import crud
 import cloudinary.uploader
 
 app = Flask(__name__)
+app.secret_key = 'RANDOM SECRET KEY'
 
 CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
 CLOUDINARY_SECRET = os.environ['CLOUDINARY_SECRET']
@@ -28,40 +29,42 @@ def register_user():
 
     email = request.form.get("email")
     password = request.form.get("password")
+    screenname = request.form.get("screenname")
 
     user = crud.get_user_by_email(email)
     if user:
         flash("An account with that email already exists.")
     else:
-        user = crud.create_user(email, password)
+        user = crud.create_user(email, password, screenname)
         db.session.add(user)
         db.session.commit()
         flash("Account created!")
-    return redirect('/home')
+        return redirect('/home')
 
 
 @app.route('/login', methods=["POST"])
 def process_login():
     """Process user log in."""
-    
+
     email = request.form.get("email")
     password = request.form.get("password")
 
     user = crud.get_user_by_email(email)
     if not user or user.password != password:
         flash("The email or password you entered was incorrect.")
+        return redirect('/')
     else:
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
-        flash(f"Welcome back, {user.email}!")
+        # flash(f"Welcome back, {user.email}!")
 
-    return redirect("/home")
+        return redirect('/home')
 
 @app.route('/home')
 def timeline():
     """Display the timeline/feed"""
 
-    return render_template('/home')
+    return render_template('home.html')
 
 # if user selects to add images, we'd need to commit the post and add the image
 # to the post and change the route to the form to have it post it w/ image

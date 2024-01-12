@@ -9,7 +9,12 @@
 
   </head>
   <body>
-  
+    <!-- get_flashed_messages() is built in Flask-->
+    <ul>
+      {% for message in get_flashed_messages() %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
   {% block content %}
   {% endblock %}
   <!-- bootstrap javascript bundle thing goes here -->
