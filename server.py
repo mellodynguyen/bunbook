@@ -22,7 +22,7 @@ def homepage():
 
     return render_template('homepage.html')
 
-@app.route('/createaccount')
+@app.route('/createaccount', methods=["POST"])
 def register_user():
     """Create a new user."""
 
@@ -60,7 +60,6 @@ def process_login():
 @app.route('/home')
 def timeline():
     """Display the timeline/feed"""
-
 
     return render_template('/home')
 
