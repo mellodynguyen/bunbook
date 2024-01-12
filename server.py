@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, flash, session, redirect
-from model import connect_to_db, db
+from model import connect_to_db, db, User, Post, Reply
 import os
 import crud
+import datetime
 # import cloudinary
 import cloudinary.uploader
 
@@ -55,20 +56,48 @@ def process_login():
         return redirect('/')
     else:
         # Log in user by storing the user's email in session
-        session["user_email"] = user.email
+        session["user_id"] = user.user_id
         # flash(f"Welcome back, {user.email}!")
-
+        print("this is the session object")
+        print(session)
         return redirect('/home')
 
 @app.route('/home')
 def timeline():
     """Display the timeline/feed"""
+    # query database for all posts
+    posts = Post.query.all()
 
-    return render_template('home.html')
+    return render_template('home.html', posts=posts)
+
+
 
 # if user selects to add images, we'd need to commit the post and add the image
 # to the post and change the route to the form to have it post it w/ image
+@app.route('/create-post', methods=["POST"])
+def create_a_post():
+    
+    user_id = session["user_id"]
+
+    body = request.form.get('post')
+
+    timestamp = datetime.datetime.now()
+    # format the date object with strftime() method
+    # timestamp = currenttime.strftime('%m/%d/%y %H:%M')
+    # print("this is the timestamp")
+    # print(timestamp)
+    # print(type(timestamp))
+    
+    # from CRUD.py: create_post(user_id, body, timestamp, language="english"):
+    post = crud.create_post(user_id, body, timestamp, language="english")
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect('/home')
+
 # add a route for cloudinary: this route will show the form
+
 
 # add a route for cloudinary: this route will process the form 
 # this route should accept POST requests

@@ -15,19 +15,19 @@ def get_user_by_email(email):
 
 def create_post(user_id, body, timestamp, language):
     """Create a post and return the post"""
-    post = Post(user_id, body, timestamp,language)
+    post = Post(user_id=user_id, body=body, timestamp=timestamp, language=language)
 
     return post
     
 def create_image(post_id, image_link):
-    image = Images(post_id, image_link)
+    image = Images(post_id=post_id, image_link=image_link)
     
     return image 
 
 
 def create_reply(user_id, post_id, body, timestamp):
     """Create a reply for a post and return the reply"""
-    reply = Reply(user_id, post_id, body, timestamp)
+    reply = Reply(user_id=user_id, post_id=post_id, body=body, timestamp=timestamp)
 
     return reply
     
