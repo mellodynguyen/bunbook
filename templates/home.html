@@ -4,31 +4,36 @@
 
 {% block content %}
 
-Welcome User
+Welcome User!
 <br>
 ----Create a Post----
-<form id="createpost" action="/create-post" method="post">
+<form id="createpost" action="/create-post" method="post" enctype="multipart/form-data">
   <input type="text" placeholder="Create A Post!" name="post">
-  <input type="submit">
-</form>
-
-
-
-<br>
----- Image form *uploads image to album*---- 
-<!-- Form for cloudinary images -->
-<form action="/post-form-data" method="post" enctype="multipart/form-data">
   <input type="file" name="my-file">
   <input type="submit">
 </form>
-<br>
 
+
+
+<br>
+<!-- ---- Image form *uploads image to album*----  -->
+<!-- Form for cloudinary images -->
+<!-- <form action="/post-form-data" method="post" enctype="multipart/form-data">
+  <input type="file" name="my-file">
+  <input type="submit">
+</form>
+<br> -->
+
+--- The Timeline/Feed --- 
+<br>
 {% for post in posts %}
 <div class="postblock">
   {{ post.user.screenname }}
   {{ post.body }}
   {{ post.timestamp }}
-
+  {% if post.images %}
+  <img src="{{ post.images[0].image_link }}">
+  {% endif %}
 </div>
 {% endfor %}
 
