@@ -57,6 +57,8 @@ def process_login():
     else:
         # Log in user by storing the user's email in session
         session["user_id"] = user.user_id
+        session["screenname"] = user.screenname
+
         # flash(f"Welcome back, {user.email}!")
         # print("this is the session object")
         # print(session)
@@ -67,10 +69,12 @@ def timeline():
     """View the timeline/feed"""
     # query database for all posts
 
-    
     posts = Post.query.all()
+    
+    # query all the replies for a specific post 
+    replies = Reply.query.all()
 
-    return render_template('home.html', posts=posts)
+    return render_template('home.html', posts=posts, replies=replies)
 
 
 
@@ -105,6 +109,27 @@ def create_a_post():
 
     return redirect('/home')
 
+@app.route('/create-reply', methods=["POST"])
+def create_a_reply():
+    """Process form to create a reply to a POST and add it to the DB"""
+    
+    user_id = session["user_id"]
+    # print(user_id)
+    post_id = int(request.form.get('post_id'))
+    # print(post_id)
+    # print(type(post_id))
+    body = request.form.get('reply')
+    # print(body)
+    timestamp = datetime.datetime.now()
+    # print(timestamp)
+
+    reply = crud.create_reply(user_id, post_id, body, timestamp)
+
+    db.session.add(reply)
+    db.session.commit()
+
+    return redirect('/home')
+
 # add a route for cloudinary: this route will show the form
 
 
@@ -121,9 +146,9 @@ def create_a_post():
 #     return jsonify(img_url)
     
 
-
-
-
+# need log out function!
+#   session.pop('user_id', None)
+#   session.pop('screenname', None)
 
 # helper function to upload image to cloudinary
     

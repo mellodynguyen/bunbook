@@ -4,7 +4,7 @@
 
 {% block content %}
 
-Welcome User!
+Welcome {{ session["screenname"] }}
 <br>
 ----Create a Post----
 <form id="createpost" action="/create-post" method="post" enctype="multipart/form-data">
@@ -13,6 +13,7 @@ Welcome User!
   <input type="submit">
 </form>
 
+<br>
 
 
 <br>
@@ -31,9 +32,25 @@ Welcome User!
   {{ post.user.screenname }}
   {{ post.body }}
   {{ post.timestamp }}
+
   {% if post.images %}
   <img src="{{ post.images[0].image_link }}">
   {% endif %}
+
+  <form class="createreply" method="post">
+    <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
+    <input type="text" placeholder="Reply!" name="reply">
+    <input type="submit">
+  </form>
+
+  <div class="replyblock">
+    {% for reply in replies %}
+    <!-- need screen name in DB for user reply (author) -->
+    {{ reply.reply_id }}
+    {{ reply.body }}
+    {% endfor %}
+  </div>
+
 </div>
 {% endfor %}
 
