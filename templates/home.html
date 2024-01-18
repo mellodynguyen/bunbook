@@ -6,6 +6,7 @@
 
 Welcome {{ session["screenname"] }}
 <br>
+<!-- Create a Post form -->
 ----Create a Post----
 <form id="createpost" action="/create-post" method="post" enctype="multipart/form-data">
   <input type="text" placeholder="Create A Post!" name="post">
@@ -14,16 +15,6 @@ Welcome {{ session["screenname"] }}
 </form>
 
 <br>
-
-
-<br>
-<!-- ---- Image form *uploads image to album*----  -->
-<!-- Form for cloudinary images -->
-<!-- <form action="/post-form-data" method="post" enctype="multipart/form-data">
-  <input type="file" name="my-file">
-  <input type="submit">
-</form>
-<br> -->
 
 --- The Timeline/Feed --- 
 <br>
@@ -34,10 +25,12 @@ Welcome {{ session["screenname"] }}
   {{ post.timestamp }}
   {{ post.post_id }}
 
+<!-- Show a post's images -->
   {% if post.images %}
   <img src="{{ post.images[0].image_link }}">
   {% endif %}
 
+  <!-- Create a Reply form -->
   <form class="createreply" action="/create-reply" method="post">
     <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
     <input type="text" placeholder="Reply!" name="reply">
@@ -46,6 +39,8 @@ Welcome {{ session["screenname"] }}
 
   <!-- From Post model: (table name = posts) reply -->
   <!--- From Reply model: (table name = replies)reply_post -->
+
+
   <div class="replyblock" id="{{ post.post_id }}">
     {% if post.reply %}
     {% for reply in post.reply %}
@@ -53,7 +48,7 @@ Welcome {{ session["screenname"] }}
     {{ reply.reply_user.screenname }}
     {{ reply.reply_id }}
     {{ reply.body }}
-    {{ post.timestamp }}
+    {{ reply.timestamp }}
     {% endfor %}
     {% endif %}
   </div>

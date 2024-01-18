@@ -42,7 +42,7 @@ def register_user():
         flash("Account created!")
         return redirect('/home')
 
-
+# we'll need a button on the timeline page that routes to /logout
 @app.route('/login', methods=["POST"])
 def process_login():
     """Process user log in."""
@@ -67,6 +67,18 @@ def process_login():
 # need log out function!
 #   session.pop('user_id', None)
 #   session.pop('screenname', None)
+    
+@app.route('/logout')
+def process_logout():
+    """Process user log out"""
+    
+    session.pop('user_id', None)
+    session.pop('screenname', None)
+    
+    flash("Logged out!")
+
+    return redirect('/')
+
 
 @app.route('/home')
 def timeline():
