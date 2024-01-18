@@ -28,6 +28,6 @@ document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
         .then((response) => response.text())
         .then((reply) => {
             // add reply to display 
-            document.querySelector('.replyblock').insertAdjacentHTML(`${reply}`)
+            document.querySelector(evt.target.document.querySelector('#postid').value).insertAdjacentHTML(`${reply}`)
         })
 })

@@ -32,23 +32,30 @@ Welcome {{ session["screenname"] }}
   {{ post.user.screenname }}
   {{ post.body }}
   {{ post.timestamp }}
+  {{ post.post_id }}
 
   {% if post.images %}
   <img src="{{ post.images[0].image_link }}">
   {% endif %}
 
-  <form class="createreply" method="post">
+  <form class="createreply" action="/create-reply" method="post">
     <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
     <input type="text" placeholder="Reply!" name="reply">
     <input type="submit">
   </form>
 
-  <div class="replyblock">
-    {% for reply in replies %}
-    <!-- need screen name in DB for user reply (author) -->
+  <!-- From Post model: (table name = posts) reply -->
+  <!--- From Reply model: (table name = replies)reply_post -->
+  <div class="replyblock" id="{{ post.post_id }}">
+    {% if post.reply %}
+    {% for reply in post.reply %}
+    <!-- need screen name from DB for user reply (author) -->
+    {{ reply.reply_user.screenname }}
     {{ reply.reply_id }}
     {{ reply.body }}
+    {{ post.timestamp }}
     {% endfor %}
+    {% endif %}
   </div>
 
 </div>

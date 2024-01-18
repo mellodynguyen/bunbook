@@ -33,6 +33,11 @@ def create_reply(user_id, post_id, body, timestamp):
     
 # like is not a column so it is not a CRUD function we need to call out
 
+def get_replies_by_postid(post_id):
+    """Get all replies for a specific Post."""
+    replies = Reply.query.filter(Reply.post_id == post_id).all()
+
+    return replies
 
 
 

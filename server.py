@@ -64,14 +64,20 @@ def process_login():
         # print(session)
         return redirect('/home')
 
+# need log out function!
+#   session.pop('user_id', None)
+#   session.pop('screenname', None)
+
 @app.route('/home')
 def timeline():
     """View the timeline/feed"""
     # query database for all posts
 
     posts = Post.query.all()
-    
+
     # query all the replies for a specific post 
+    # post_id = request.form.get('post_id')
+    # replies = crud.get_replies_by_postid(post_id)
     replies = Reply.query.all()
 
     return render_template('home.html', posts=posts, replies=replies)
@@ -128,9 +134,9 @@ def create_a_reply():
     db.session.add(reply)
     db.session.commit()
 
+
     return redirect('/home')
 
-# add a route for cloudinary: this route will show the form
 
 
 # add a route for cloudinary: this route will process the form 
@@ -146,9 +152,6 @@ def create_a_reply():
 #     return jsonify(img_url)
     
 
-# need log out function!
-#   session.pop('user_id', None)
-#   session.pop('screenname', None)
 
 # helper function to upload image to cloudinary
     
