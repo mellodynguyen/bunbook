@@ -1,3 +1,10 @@
 .postblock {
-    border: 5x solid red;
+    border: 5px solid black;
+    border-style: dotted;
+    width: 500px;
+}
+
+.postimages {
+    height: 200px;
+    width: 200px;
 }

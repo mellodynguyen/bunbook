@@ -32,10 +32,10 @@ Welcome {{ session["screenname"] }}
   <br>
   <!-- post.like will give a list, we want length of list -->
   Likes: {{ calculatelikes(post.like) }}
-  
+  <br> 
 <!-- Show a post's images if any -->
   {% if post.images %}
-  <img src="{{ post.images[0].image_link }}">
+  <img class="postimages" src="{{ post.images[0].image_link }}">
   {% endif %}
 
   <!-- Like a post form -->
