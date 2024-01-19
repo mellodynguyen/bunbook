@@ -16,19 +16,33 @@ Welcome {{ session["screenname"] }}
 
 <br>
 
+<!-- The Timeline/Feed  -->
 --- The Timeline/Feed --- 
+
 <br>
+
 {% for post in posts %}
 <div class="postblock">
-  {{ post.user.screenname }}
-  {{ post.body }}
-  {{ post.timestamp }}
-  {{ post.post_id }}
-
-<!-- Show a post's images -->
+  username: {{ post.user.screenname }}
+  <br>
+  body: {{ post.body }}
+  <br>
+  time: {{ post.timestamp }}
+  Post_id: {{ post.post_id }}
+  <br>
+  <!-- post.like will give a list, we want length of list -->
+  Likes: {{ calculatelikes(post.like) }}
+  
+<!-- Show a post's images if any -->
   {% if post.images %}
   <img src="{{ post.images[0].image_link }}">
   {% endif %}
+
+  <!-- Like a post form -->
+  <form class="likeapost" action="/like-post" method="post">
+    <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
+    <button type="submit" name="likebutton">Like</button>
+  </form>
 
   <!-- Create a Reply form -->
   <form class="createreply" action="/create-reply" method="post">
@@ -37,18 +51,16 @@ Welcome {{ session["screenname"] }}
     <input type="submit">
   </form>
 
-  <!-- From Post model: (table name = posts) reply -->
-  <!--- From Reply model: (table name = replies)reply_post -->
-
-
+  <!-- Show replies to post if any -->
   <div class="replyblock" id="{{ post.post_id }}">
     {% if post.reply %}
     {% for reply in post.reply %}
-    <!-- need screen name from DB for user reply (author) -->
-    {{ reply.reply_user.screenname }}
-    {{ reply.reply_id }}
-    {{ reply.body }}
-    {{ reply.timestamp }}
+    username: {{ reply.reply_user.screenname }}
+    <br>
+    body: {{ reply.body }}
+    <br>
+    time: {{ reply.timestamp }}
+    reply_id {{ reply.reply_id }}
     {% endfor %}
     {% endif %}
   </div>

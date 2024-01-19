@@ -28,6 +28,21 @@ document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
         .then((response) => response.text())
         .then((reply) => {
             // add reply to display 
-            document.querySelector(evt.target.document.querySelector('#postid').value).insertAdjacentHTML(`${reply}`)
+            document.querySelector(evt.target.document.querySelector('#postid')
+                                    .value).insertAdjacentHTML(`${reply}`)
         })
+});
+
+// for liking a post 
+document.querySelectorAll('.likeapost')addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    evt.target.document.querySelector('#likepostid').value
+
+    // fetch('/like-post')
+    //     .then((response) => response.text())
+    //     .then((like) => {
+            
+    //     })
+
 })

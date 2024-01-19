@@ -109,6 +109,7 @@ class Reply(db.Model):
     body = db.Column(db.String, nullable=False)
     timestamp = db.Column(db.DateTime)
     # language = db.Column(db.String, default="english")
+ 
 
     # a reply can have many likes
     like = db.relationship("ReplyLike", back_populates="replylikes")
