@@ -1,5 +1,5 @@
 .postblock {
-    border: 5px solid black;
+    border: 5px black;
     border-style: dotted;
     width: 500px;
 }
@@ -7,4 +7,10 @@
 .postimages {
     height: 200px;
     width: 200px;
+}
+
+.replyblock {
+    border: 2px black;
+    border-style: dotted;
+    width: 300px;
 }

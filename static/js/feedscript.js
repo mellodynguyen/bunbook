@@ -34,7 +34,7 @@ document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
 });
 
 // for liking a post 
-document.querySelectorAll('.likeapost')addEventListener('submit', (evt) => {
+document.querySelectorAll('.likeapost').addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     evt.target.document.querySelector('#likepostid').value
@@ -45,4 +45,12 @@ document.querySelectorAll('.likeapost')addEventListener('submit', (evt) => {
             
     //     })
 
-})
+});
+
+// for liking a reply
+document.querySelectorAll('.likeareply').addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    evt.target.document.querySelector('#likereplyid').value
+
+});

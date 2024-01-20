@@ -166,7 +166,7 @@ def create_a_reply():
 
 @app.route('/like-post', methods=['POST'])
 def like_a_post():
-    """Process liking a post"""
+    """Process liking a post."""
 
     # like_id = request.form.get('likebutton')
 
@@ -181,7 +181,20 @@ def like_a_post():
 
     return redirect('/home')
 
+@app.route('/like-reply', methods=['POST'])
+def like_a_reply():
+    """Process liking a reply."""
 
+    user_id = session['user_id']
+
+    reply_id = int(request.form.get('likereplyid'))
+
+    replylike = crud.create_like_for_reply(user_id, reply_id)
+
+    db.session.add(replylike)
+    db.session.commit()
+
+    return redirect('/home')
 
 
 # helper function to upload image to cloudinary

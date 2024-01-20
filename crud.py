@@ -33,6 +33,7 @@ def create_reply(user_id, post_id, body, timestamp):
     
 # like is not a column so it is not a CRUD function we need to call out
 def create_like_for_post(user_id, post_id):
+    """Create a like for a post and return the like"""
     post_like = PostLike(user_id=user_id, post_id=post_id)
     
     return post_like
@@ -43,7 +44,12 @@ def create_like_for_post(user_id, post_id):
 
 #     return replies
 
+def create_like_for_reply(user_id, reply_id):
+    """Create a like for a reply and return the like"""
 
+    reply_like = ReplyLike(user_id=user_id, reply_id=reply_id)
+
+    return reply_like
 
 
 # CRUD also needs to deal with database connections 
