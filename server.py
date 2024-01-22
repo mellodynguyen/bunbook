@@ -104,6 +104,12 @@ def timeline():
                            calculatelikes=calculatelikes)
 
 
+@app.route('/profile')
+def profile():
+    """View the User's profile"""
+
+    return render_template('profile.html')
+
 
 # if user selects to add images, we'd need to commit the post and add the image
 # to the post and change the route to the form to have it post it w/ image
