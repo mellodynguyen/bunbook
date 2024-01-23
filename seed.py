@@ -19,3 +19,21 @@ model.db.create_all()
 
 
 
+# crud functions to create new user to make test users
+# user1
+
+# commit all users
+
+# crud func to create post for each user
+# add and commit posts to db - need posts in order for replies and likes
+
+
+# crud func for reply
+# add and commit reply
+
+# crud func for post likes
+# add and commit likes
+
+
+# crud func for reply likes
+# add and commit likes

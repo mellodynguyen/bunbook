@@ -5,23 +5,30 @@
 
 
 {% block content %}
+<!-- User Profile container -->
 <div class="usercontainer">
+Profile photo
+<br>
+User Bio:
+
+<br>
 
 </div>
+
 <!-- only show user's posts -->
 {% for post in user.user_posts %}
     <div class="postblock">
         username: {{ post.user.screenname }}
         <br>
         body: {{ post.body }}
-        <br>
 
         {% if post.images %}
-        <img class="postimages" src="{{ post.images[0].image_link }}">
-        {% endif %}
-
         <br>
-        time: {{ post.timestamp }}
+        <img class="postimages" src="{{ post.images[0].image_link }}">
+        <br>
+        {% endif %}
+        <br>
+        timestamp: {{ post.timestamp }}
         Post_id: {{ post.post_id }}
         <br>
         Likes: {{ calculatelikes(post.like) }}
@@ -33,6 +40,10 @@
     <div class="replyblock">
         <!-- link to post here -->
         
+        <!-- in reply, reply table reply_post = post from Post table -->
+        <!-- then user from post table and then grabbed screenname -->
+        In reply to: {{ reply.reply_post.user.screenname }}
+        <br>
         username: {{ reply.reply_user.screenname }}
         <br>
         body: {{ reply.body }}
