@@ -108,7 +108,15 @@ def timeline():
 def profile():
     """View the User's profile"""
 
-    return render_template('profile.html')
+    # profile page should show the user's posts and replies
+    user = crud.get_user_by_id(session['user_id'])
+    # should also show their likes
+
+    # add a form so the user can upload a photo that will be their pfp
+
+   
+    
+    return render_template('profile.html', user=user, calculatelikes=calculatelikes)
 
 
 # if user selects to add images, we'd need to commit the post and add the image

@@ -13,6 +13,9 @@ def create_user(email, password, screenname):
 def get_user_by_email(email):
     return User.query.filter(User.email == email).first() 
 
+def get_user_by_id(user_id):
+    return User.query.get(user_id)
+
 def create_post(user_id, body, timestamp, language):
     """Create a post and return the post"""
     post = Post(user_id=user_id, body=body, timestamp=timestamp, language=language)

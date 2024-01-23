@@ -1,0 +1,53 @@
+{% extends 'feedprofilebase.html' %}
+
+<!-- change title to display user info/screen name  -->
+{% block title %}Bunbook Profile{% endblock %}
+
+
+{% block content %}
+<div class="usercontainer">
+
+</div>
+<!-- only show user's posts -->
+{% for post in user.user_posts %}
+    <div class="postblock">
+        username: {{ post.user.screenname }}
+        <br>
+        body: {{ post.body }}
+        <br>
+
+        {% if post.images %}
+        <img class="postimages" src="{{ post.images[0].image_link }}">
+        {% endif %}
+
+        <br>
+        time: {{ post.timestamp }}
+        Post_id: {{ post.post_id }}
+        <br>
+        Likes: {{ calculatelikes(post.like) }}
+    </div>
+{% endfor %}
+
+<!-- only show user's replies -->
+{% for reply in user.user_replies %}
+    <div class="replyblock">
+        <!-- link to post here -->
+        
+        username: {{ reply.reply_user.screenname }}
+        <br>
+        body: {{ reply.body }}
+        <br>
+        time: {{ reply.timestamp }}
+        reply_id {{ reply.reply_id }}
+        <br>
+        Likes: {{ calculatelikes(reply.like) }}
+        <br>
+        <!-- Like a reply form -->
+        <form class="likeareply" action="/like-reply" method="post">
+            <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
+            <button type="submit" name="likebutton">Like</button>
+        </form>
+    </div>
+{% endfor %}
+
+{% endblock %}
