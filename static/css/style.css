@@ -14,3 +14,8 @@
     border-style: dotted;
     width: 300px;
 }
+
+.profilepicture {
+    height: 100px;
+    width: 100px;
+}

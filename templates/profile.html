@@ -9,12 +9,20 @@
 <div class="usercontainer">
 Profile photo
 <br>
+<img class="profilepicture" src="{{ user.profilepic }}">
+<br>
+<form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
+    <input type="file" name="profilepic">
+    <input type="submit">
+</form>
+<br>
 User Bio:
 
 <br>
 
 </div>
-
+Posts:
+<br>
 <!-- only show user's posts -->
 {% for post in user.user_posts %}
     <div class="postblock">

@@ -41,11 +41,12 @@ def create_like_for_post(user_id, post_id):
     
     return post_like
 
-# def get_replies_by_postid(post_id):
-#     """Get all replies for a specific Post."""
-#     replies = Reply.query.filter(Reply.post_id == post_id).all()
+def create_user_pfp(user_id, image_link):
+    current_user = get_user_by_id(user_id)
+    current_user.profilepic = image_link
+    
+    return current_user
 
-#     return replies
 
 def create_like_for_reply(user_id, reply_id):
     """Create a like for a reply and return the like"""

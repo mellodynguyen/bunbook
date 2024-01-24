@@ -15,6 +15,7 @@ os.system('createdb bunbook')
 
 # connect to the database and call db.create_all
 model.connect_to_db(server.app)
+server.app.app_context().push()
 model.db.create_all()
 
 

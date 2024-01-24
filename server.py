@@ -38,6 +38,7 @@ def register_user():
     password = request.form.get("password")
     screenname = request.form.get("screenname")
 
+
     user = crud.get_user_by_email(email)
     if user:
         flash("An account with that email already exists.")
@@ -46,6 +47,9 @@ def register_user():
         db.session.add(user)
         db.session.commit()
         flash("Account created!")
+
+        session["user_id"] = user.user_id
+        session["screenname"] = user.screenname
 
         return redirect('/home')
 
@@ -111,12 +115,27 @@ def profile():
     # profile page should show the user's posts and replies
     user = crud.get_user_by_id(session['user_id'])
     # should also show their likes
-
-    # add a form so the user can upload a photo that will be their pfp
-
    
     
     return render_template('profile.html', user=user, calculatelikes=calculatelikes)
+
+@app.route('/profile-pic', methods=['POST'])
+def upload_profile_picture():
+    """Process form to allow users to upload a profile photo"""
+
+    user_id = session['user_id']
+
+    # add a form so the user can upload a photo that will be their pfp
+    user_file = request.files.get('profilepic')
+    img_url = upload_to_cloudinary(user_file)
+    
+    user_with_pic = crud.create_user_pfp(user_id, img_url)
+
+    db.session.add(user_with_pic)
+    db.session.commit()
+
+    return redirect('/profile')
+
 
 
 # if user selects to add images, we'd need to commit the post and add the image

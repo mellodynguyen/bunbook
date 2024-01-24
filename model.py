@@ -15,6 +15,8 @@ class User(db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     screenname = db.Column(db.String, nullable=False)
+    # user profile photo
+    profilepic = db.Column(db.String, default="")
 
     # a user can have many posts
     user_posts = db.relationship("Post", back_populates="user")
