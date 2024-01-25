@@ -1,6 +1,6 @@
 """CRUD operations."""
 
-from model import db, User, Post, Images, PostLike, Reply, ReplyLike, connect_to_db
+from model import db, User, Post, Images, PostLike, Reply, ReplyLike, Notification, connect_to_db
 
 def create_user(email, password, screenname):
     """Create and return a new user."""
@@ -15,6 +15,9 @@ def get_user_by_email(email):
 
 def get_user_by_id(user_id):
     return User.query.get(user_id)
+
+def get_user_by_post_id(post_id):
+    return Post.query.filter(post_id=post_id)
 
 def create_post(user_id, body, timestamp, language):
     """Create a post and return the post"""
@@ -42,6 +45,7 @@ def create_like_for_post(user_id, post_id):
     return post_like
 
 def create_user_pfp(user_id, image_link):
+    """Create image for user profile picture"""
     current_user = get_user_by_id(user_id)
     current_user.profilepic = image_link
     
@@ -55,7 +59,14 @@ def create_like_for_reply(user_id, reply_id):
 
     return reply_like
 
+def create_notification(user_id, notifier_id, post_id, type_of_thing, timestamp):
+    """Create a notification"""
 
+    notification = Notification(user_id=user_id, notifier_id=notifier_id, 
+                                post_id=post_id, type_of_thing=type_of_thing,
+                                timestamp=timestamp)
+    
+    return notification 
 # CRUD also needs to deal with database connections 
 if __name__ == '__main__':
     from server import app

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, flash, session, redirect, jsonify, url_for
-from model import connect_to_db, db, User, Post, Reply, PostLike, ReplyLike
+from model import connect_to_db, db, User, Post, Reply, PostLike, ReplyLike, Notification
 import os
 import crud
 import datetime
@@ -30,6 +30,7 @@ def homepage():
 
     return render_template('homepage.html')
 
+
 @app.route('/createaccount', methods=["POST"])
 def register_user():
     """Create a new user."""
@@ -53,6 +54,7 @@ def register_user():
 
         return redirect('/home')
 
+
 # we'll need a button on the timeline page that routes to /logout
 @app.route('/login', methods=["POST"])
 def process_login():
@@ -75,9 +77,6 @@ def process_login():
         # print(session)
         return redirect('/home')
 
-# need log out function!
-#   session.pop('user_id', None)
-#   session.pop('screenname', None)
     
 @app.route('/logout')
 def process_logout():
@@ -119,6 +118,7 @@ def profile():
     
     return render_template('profile.html', user=user, calculatelikes=calculatelikes)
 
+
 @app.route('/profile-pic', methods=['POST'])
 def upload_profile_picture():
     """Process form to allow users to upload a profile photo"""
@@ -135,6 +135,55 @@ def upload_profile_picture():
     db.session.commit()
 
     return redirect('/profile')
+
+
+app.route('/notifications')
+def notifications():
+    """View the notifications page"""
+    # should display all notifications for a specific user
+    # should have links to the post and to the user who interacted/gave the notification
+
+    notifications = Notification.query.all()
+
+    return render_template('/notifications', notifications=notifications)
+
+
+# @app.route('/new-notification')
+# when a reply happens, it submits the form, creates the reply and the notification
+# so it submits to the same route and doesn't need a new route. 
+    # which route it hits will tell us what type of thing it is 
+# def notify():
+#     """Process notification for interactions"""
+    
+#     # who is the notification from
+#     user_id = session['user_id']
+
+
+#     # who is the notification for
+#         # maybe query the database to get the author of the post/reply
+#         # tina is original poster and lets say her id 3
+    
+#     notifier_id = crud.get_user_by_post_id(post_id)
+#     #what if the like if a reply
+#     # if its a reply do this crud function instead of that one 
+
+
+#     # timestamp needs to show the time since the notification was entered 
+#     timestamp = datetime.datetime.now()
+
+#     notification = crud.create_notification(user_id, notifier_id, post_id, 
+#                                             type_of_thing, timestamp)
+
+#     db.session.add(notification)
+#     db.session.commit()
+
+
+# app route for specific post/reply that is being replied or liked 
+# @app.route('/')
+
+
+
+# app route for viewing another user's profile 
 
 
 
@@ -172,7 +221,6 @@ def create_a_post():
     return redirect('/home')
 
 
-
 @app.route('/create-reply', methods=["POST"])
 def create_a_reply():
     """Process form to create a reply to a POST and add it to the DB"""
@@ -192,9 +240,18 @@ def create_a_reply():
     db.session.add(reply)
     db.session.commit()
 
+    # query the db for post 
+    notifier_id = crud.get_user_by_post_id(post_id).user_id
+    type_of_thing = "reply"
+    
+
+    notification = crud.create_notification(user_id, notifier_id, post_id, 
+                                            type_of_thing, timestamp)
+
+    db.session.add(notification)
+    db.session.commit()
 
     return redirect('/home')
-
 
 
 @app.route('/like-post', methods=['POST'])
@@ -212,7 +269,18 @@ def like_a_post():
     db.session.add(postlike)
     db.session.commit()
 
+    notifier_id = crud.get_user_by_post_id(post_id)
+    type_of_thing = "like"
+    timestamp = datetime.datetime.now()
+
+    notification = crud.create_notification(user_id, notifier_id, post_id,
+                                            type_of_thing, timestamp)
+    
+    db.session.add(notification)
+    db.session.commit()
+
     return redirect('/home')
+
 
 @app.route('/like-reply', methods=['POST'])
 def like_a_reply():
@@ -230,8 +298,8 @@ def like_a_reply():
     return redirect('/home')
 
 
+
 # helper function to upload image to cloudinary
-    
 def upload_to_cloudinary(media_file):
     """Upload media file to Cloudinary"""
     result = cloudinary.uploader.upload(media_file, 

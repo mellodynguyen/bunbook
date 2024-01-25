@@ -21,11 +21,17 @@ model.db.create_all()
 
 
 # crud functions to create new user to make test users
-# user1
+testuser1 = crud.create_user("mellody@test.com", "babyoak", "oak123")
+testuser2 = crud.create_user("dubu@test.com", "dubu", "dubu123")
+testuser3 = crud.create_user("pope@test.com", "pope", "pope123")
 
 # commit all users
+model.db.session.add(testuser1, testuser2, testuser3)
+model.db.session.commit()
 
 # crud func to create post for each user
+testpost1 = crud.create_post()
+testpost2 = crud.create_post()
 # add and commit posts to db - need posts in order for replies and likes
 
 

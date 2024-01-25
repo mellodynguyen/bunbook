@@ -140,24 +140,47 @@ class ReplyLike(db.Model):
         return f'<ReplyLike like_id{self.like_id}>'
 
 
-# flexibility for testing, multiple database - one for real people and 
-# one for fake people (accounts)
-# def connect_to_db(app, db_name):
-#     """Connect to database."""
+class Notification(db.Model):
+    """Notifications for User"""
 
-#     # The location of your database.
-#     # app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///{db_name}"
-#     app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql:///bunbook"
-#     # Enable to output the raw SQL executed by SQLAlchemy. Useful for debugging!
-#     app.config["SQLALCHEMY_ECHO"] = True
-#     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    __tablename__ = "notifications"
 
-#     # to connect the database with a Flask app
-#     db.app = app
-#     db.init_app(app)
+    notification_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    # Actor: who is the notification from
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+    # who is the notification for
+    notifier_id = db.Column(db.Integer, nullable=False)
 
-#     print("Connected to the db!")
+    # what post is it for/against
+    post_id = db.Column(db.Integer, nullable=False)
+
+    # what type of thing did they interact with (str)
+        # what is the id of the interaction (pairs with the type of thing)
+            # when we run a query, we can have a conditional
+    type_of_thing = db.Column(db.String)
+
+    # when did it happen (timestamp)
+    timestamp = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return f'<Notification notification_id{self.notification_id} from user_id{self.user_id}>'
+
+
+# class NotificationObject(db.Model):
+#     """Notifications for Posts"""
+
+#     __tablename__ = "notificationobjects"
+
+#     notificationobj_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     # what post is the notification for/against
+#     post_id = db.Column(db.Integer, db.ForeignKey("posts.post_id"))
     
+#     # what did they do the post? Like / Reply
+    
+#     # timestamp - so we can display how long ago was the notification
+#     timestamp = db.Column(db.DateTime)
+
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///bunbook", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
