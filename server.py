@@ -137,7 +137,7 @@ def upload_profile_picture():
     return redirect('/profile')
 
 
-app.route('/notifications')
+@app.route('/notifications')
 def notifications():
     """View the notifications page"""
     # should display all notifications for a specific user
@@ -145,42 +145,19 @@ def notifications():
 
     notifications = Notification.query.all()
 
-    return render_template('/notifications', notifications=notifications)
+    return render_template('notifications.html', notifications=notifications)
 
 
-# @app.route('/new-notification')
 # when a reply happens, it submits the form, creates the reply and the notification
 # so it submits to the same route and doesn't need a new route. 
     # which route it hits will tell us what type of thing it is 
-# def notify():
-#     """Process notification for interactions"""
-    
-#     # who is the notification from
-#     user_id = session['user_id']
-
-
-#     # who is the notification for
-#         # maybe query the database to get the author of the post/reply
-#         # tina is original poster and lets say her id 3
-    
-#     notifier_id = crud.get_user_by_post_id(post_id)
-#     #what if the like if a reply
-#     # if its a reply do this crud function instead of that one 
-
-
-#     # timestamp needs to show the time since the notification was entered 
-#     timestamp = datetime.datetime.now()
-
-#     notification = crud.create_notification(user_id, notifier_id, post_id, 
-#                                             type_of_thing, timestamp)
-
-#     db.session.add(notification)
-#     db.session.commit()
-
 
 # app route for specific post/reply that is being replied or liked 
-# @app.route('/')
+# @app.route('/post/{post_id}')
+# def specific_post():
+#     """View a specific post (from notifications)"""
 
+#     return render_template()
 
 
 # app route for viewing another user's profile 
@@ -262,22 +239,30 @@ def like_a_post():
 
     user_id = session['user_id']
     post_id = int(request.form.get('likepostid'))
-    # print(post_id)
-    # print(type(post_id))
+    print(post_id)
+    print(type(post_id))
     postlike = crud.create_like_for_post(user_id, post_id)
-
     db.session.add(postlike)
     db.session.commit()
 
-    notifier_id = crud.get_user_by_post_id(post_id)
+
+    notifier_id = crud.get_user_by_post_id(post_id).user_id
+    # print(notifier_id)
+    # print(type(notifier_id))
     type_of_thing = "like"
     timestamp = datetime.datetime.now()
 
     notification = crud.create_notification(user_id, notifier_id, post_id,
                                             type_of_thing, timestamp)
     
+    # print("Before Commit")
+    # try:
     db.session.add(notification)
     db.session.commit()
+    print("After commit")
+    # except Exception as e:
+        # db.session.rollback()
+        # print(f"Error commit to the database: {e}")
 
     return redirect('/home')
 

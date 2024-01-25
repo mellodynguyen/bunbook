@@ -1,0 +1,18 @@
+{% extends 'feedprofilebase.html' %}
+
+{% block title %}Bunbook Notifications{% endblock %}
+
+{% block content %}
+
+Notifications:
+<br>
+{% for notification in notifications %}
+    {% if notification.type_of_thing == "reply" %}
+        {{ notification.user_id }} replied to your post {{ notification.post_id }}
+    
+    {% elif notification.type_of_thing == "like" %}
+        {{ notification.user_id }} liked your post
+    {% endif %}
+{% endfor %}
+
+{% endblock %}
