@@ -1,0 +1,50 @@
+{% extends 'feedprofilebase.html' %}
+
+
+{% block title %}Bunbook {{ post.user.screenname }} Post: {{post_id}}{% endblock %}
+
+{% block content %}
+
+<div class="postblock">
+    {{ post.user.screenname }}
+    <br>
+    {{ post.body }}
+    {% if post.images %}
+    <br>
+    <img class="postimages" src="{{ post.images[0].image_link }}">
+    <br>
+    {% endif %}
+    <br>
+    timestamp: {{ post.timestamp }}
+    <br>
+    Likes: {{ calculatelikes(post.like) }}
+</div>
+<!-- Do not need the "if reply" because jinja will not loop if list is empty -->
+<!-- {% if reply %} -->
+    {% for reply in replies %}
+    <div class="replyblock">
+        <!-- link to post here -->
+        
+        <!-- in reply, reply table reply_post = post from Post table -->
+        <!-- then user from post table and then grabbed screenname -->
+        In reply to: {{ reply.reply_post.user.screenname }}
+        <br>
+        username: {{ reply.reply_user.screenname }}
+        <br>
+        body: {{ reply.body }}
+        <br>
+        time: {{ reply.timestamp }}
+        reply_id {{ reply.reply_id }}
+        <br>
+        Likes: {{ calculatelikes(reply.like) }}
+        <br>
+        <!-- Like a reply form -->
+        <form class="likeareply" action="/like-reply" method="post">
+            <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
+            <button type="submit" name="likebutton">Like</button>
+        </form>
+    </div>
+    {% endfor %}
+<!-- {% endif %} -->
+
+{% endblock %}

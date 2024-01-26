@@ -153,15 +153,25 @@ def notifications():
     # which route it hits will tell us what type of thing it is 
 
 # app route for specific post/reply that is being replied or liked 
-# @app.route('/post/{post_id}')
-# def specific_post():
-#     """View a specific post (from notifications)"""
+@app.route('/post/<post_id>')
+def specific_post(post_id):
+    """View a specific post (from notifications)"""
 
-#     return render_template()
+    post = Post.query.get(post_id)
+    replies = Reply.query.all()
+
+    return render_template('post.html', post=post, replies=replies, 
+                           calculatelikes=calculatelikes)
 
 
 # app route for viewing another user's profile 
+@app.route('/user/<user_id>')
+def show_other_user_profile(user_id):
+    """Show another user's profile based on user_id"""
+    
+    user = crud.get_user_by_id(user_id)
 
+    return render_template('other_user_profile.html', user=user)
 
 
 # if user selects to add images, we'd need to commit the post and add the image

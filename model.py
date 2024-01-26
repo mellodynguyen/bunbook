@@ -23,6 +23,8 @@ class User(db.Model):
 
     user_replies = db.relationship("Reply", back_populates="reply_user")
 
+    user_notification = db.relationship("Notification", back_populates="user")
+    
     # data model lecture example:
     # book = db.relationship("Book", back_populates="printings")
     # Class(Book) name and back_populates is how you relate the attributes in
@@ -67,6 +69,7 @@ class Post(db.Model):
     # testing purposes:
     # post.images will be a list and will have an image objects, 
     # and if it doesnt, the list will be empty (no images)
+
 
     def __repr__(self):
         return f'<Post post_id={self.post_id}>'
@@ -161,6 +164,8 @@ class Notification(db.Model):
 
     # when did it happen (timestamp)
     timestamp = db.Column(db.DateTime)
+
+    user = db.relationship("User", back_populates="user_notification")
 
     def __repr__(self):
         return f'<Notification notification_id{self.notification_id} from user_id{self.user_id}>'
