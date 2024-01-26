@@ -171,7 +171,12 @@ def show_other_user_profile(user_id):
     
     user = crud.get_user_by_id(user_id)
 
-    return render_template('other_user_profile.html', user=user)
+    posts = Post.query.filter(user_id == user_id).all()
+
+    replies = Reply.query.filter(user_id == user_id).all()
+
+    return render_template('other_user_profile.html', user=user, posts=posts,
+                           replies=replies, calculatelikes=calculatelikes)
 
 
 # if user selects to add images, we'd need to commit the post and add the image
