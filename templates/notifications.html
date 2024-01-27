@@ -9,9 +9,11 @@ Notifications:
 {% for notification in notifications %}
     {% if notification.type_of_thing == "reply" %}
         {{ notification.user.screenname }} replied to your post {{ notification.post_id }}
+        <br>
     
     {% elif notification.type_of_thing == "like" %}
         {{ notification.user.screenname }} liked your post
+        <br>
     {% endif %}
 {% endfor %}
 

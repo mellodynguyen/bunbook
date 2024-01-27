@@ -19,6 +19,9 @@ def get_user_by_id(user_id):
 def get_user_by_post_id(post_id):
     return Post.query.get(post_id)
 
+def get_user_by_reply_id(reply_id):
+    return Reply.query.get(reply_id)
+
 def create_post(user_id, body, timestamp, language):
     """Create a post and return the post"""
     post = Post(user_id=user_id, body=body, timestamp=timestamp, language=language)
