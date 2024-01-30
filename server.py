@@ -73,8 +73,6 @@ def process_login():
         session["screenname"] = user.screenname
 
         # flash(f"Welcome back, {user.email}!")
-        # print("this is the session object")
-        # print(session)
         return redirect('/home')
 
     
@@ -105,6 +103,17 @@ def timeline():
     
     return render_template('home.html', posts=posts, replies=replies, 
                            calculatelikes=calculatelikes)
+
+
+# get the latest post to refresh the timeline when user clicks a button 
+@app.route('/api/latest-posts')
+def get_latest_posts():
+    """Get any new posts since page was initially loaded"""
+    latest_posts = Post.query.order_by(Post.timestamp.desc()).limit(5).all()
+
+    posts_data = [{'post_id': post.post_id, 'timestamp': post.timestamp} for post in latest_posts]
+
+    return jsonify({'latest_posts': posts_data})
 
 
 @app.route('/profile')
@@ -218,14 +227,13 @@ def create_a_reply():
     """Process form to create a reply to a POST and add it to the DB"""
     
     user_id = session["user_id"]
-    # print(user_id)
+    
     post_id = int(request.form.get('post_id'))
-    # print(post_id)
-    # print(type(post_id))
+   
     body = request.form.get('reply')
-    # print(body)
+   
     timestamp = datetime.datetime.now()
-    # print(timestamp)
+    
 
     reply = crud.create_reply(user_id, post_id, body, timestamp)
 
@@ -254,8 +262,8 @@ def like_a_post():
 
     user_id = session['user_id']
     post_id = int(request.form.get('likepostid'))
-    print(post_id)
-    print(type(post_id))
+    # print(post_id)
+    # print(type(post_id))
     postlike = crud.create_like_for_post(user_id, post_id)
     db.session.add(postlike)
     db.session.commit()
