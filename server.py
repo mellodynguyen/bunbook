@@ -109,9 +109,22 @@ def timeline():
 @app.route('/api/latest-posts')
 def get_latest_posts():
     """Get any new posts since page was initially loaded"""
+    # .order_by(Post.timestamp.desc()) specifies an order for the reslts,
+    # order the reslts based on the timestamp column in descending order, desc()
+    # limit(5) limits the number of results to 5, so only the top 5 posts
     latest_posts = Post.query.order_by(Post.timestamp.desc()).limit(5).all()
 
-    posts_data = [{'post_id': post.post_id, 'timestamp': post.timestamp} for post in latest_posts]
+    posts_data = [
+        {
+            'post_id': post.post_id,
+            'timestamp': post.timestamp,
+            'user': {
+                'screenname': post.user.screenname,
+            },
+            'body': post.body,
+        }
+        for post in latest_posts
+    ]
 
     return jsonify({'latest_posts': posts_data})
 

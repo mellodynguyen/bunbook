@@ -4,7 +4,7 @@
 let latestPostTimestamp = 0;
 
 function createLatestTimestamp(posts) {
-    const maxTimestamp = Math.max(...posts.map(post => post.timestamp));
+    const maxTimestamp = Math.max(...posts.map(post => new Date (post.timestamp).getTime()));
 
     latestPostTimestamp = maxTimestamp
 };
@@ -14,18 +14,20 @@ function checkForPosts() {
     fetch('/api/latest-posts')
         .then(response => response.json())
         .then(data => {
-            // log response
             console.log('Server Response:', data);
             // if latest_post is in the data object, it will be assigned to latestPosts
             // if it is undefined it will become an empty array
             const latestPosts = data.latest_posts || [];
-            const maxTimestamp = Math.max(...latestPosts.map(post => post.timestmap));
             
-            if (maxTimestamp > latestPostTimestamp) {
-                console.log('new posts found!');
-                latestPostTimestamp = maxTimestamp;
+            const newPosts = latestPosts.filter(post => new Date(post.timestamp).getTime() > latestPostTimestamp);
+            // const newPosts = latestPosts.filter(post => post.timestamp > latestPostTimestamp);
 
-                displayNewPosts(latestPosts)
+            if (newPosts.length > 0) {
+                console.log('new posts found!');
+                // latestPostTimestamp = maxTimestampClient;
+                latestPostTimestamp = Math.max(...latestPosts.map(post => new 
+                    Date(post.timestamp).getTime()));
+                displayNewPosts(newPosts);
             } else {
                 console.log('no new posts')
             }
@@ -44,10 +46,13 @@ function displayNewPosts(newPosts) {
 
     newPosts.forEach(post => {
         const postElement = document.createElement('div');
+        
         postElement.innerHTML = `
         <div class='postblock'>
             username: ${post.user.screenname}</p>
+            <br>
             body: ${post.body}
+            <br>
             time: ${post.timestamp}
             Post_id: ${post.post_id}
         </div>
@@ -57,6 +62,18 @@ function displayNewPosts(newPosts) {
     });
 }
 
+// Initialize latestPostTimestamp when the page loads
+window.onload = () => {
+    fetch('/api/latest-posts')
+        .then(response => response.json())
+        .then(data => {
+            const latestPosts = data.latest_posts || [];
+            createLatestTimestamp(latestPosts);
+        })
+        .catch(error => {
+            console.error('Error fetching initial posts:', error);
+        });
+};
 
 setInterval(() => {
     checkForPosts();
@@ -97,12 +114,6 @@ document.querySelectorAll('.likeapost').addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     evt.target.document.querySelector('#likepostid').value
-
-    // fetch('/like-post')
-    //     .then((response) => response.text())
-    //     .then((like) => {
-            
-    //     })
 
 });
 

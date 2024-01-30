@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="../static/css/style.css">
   </head>
   <body>
+    <!-- {# For demo purposes, show our sessions #} -->
+    {% if session %}
+ 
+    <label>Flask Session</label>
+    {{ session }}
+  
+    {% endif %}
     <!-- Nav Bar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
@@ -46,6 +53,7 @@
         {% endfor %}
       </ul>
     {% block content %}
+    
     {% endblock %}
     <script src="/static/js/feedscript.js"></script>
   </body>
