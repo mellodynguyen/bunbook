@@ -8,11 +8,13 @@ Notifications:
 <br>
 {% for notification in notifications %}
     {% if notification.type_of_thing == "reply" %}
-        {{ notification.user.screenname }} replied to your post {{ notification.post_id }}
+        <a href="/user/{{ notification.user_id }}">{{ notification.user.screenname }}</a> 
+        replied to your <a href="/post/{{ notification.post_id }}"post>post</a> 
         <br>
     
     {% elif notification.type_of_thing == "like" %}
-        {{ notification.user.screenname }} liked your post
+        <a href="/user/{{ notification.user_id }}">{{ notification.user.screenname }} </a>
+            liked your <a href="/post/{{ notification.post_id }}"post>post</a> 
         <br>
     {% endif %}
 {% endfor %}

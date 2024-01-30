@@ -165,7 +165,10 @@ def notifications():
     # should display all notifications for a specific user
     # should have links to the post and to the user who interacted/gave the notification
 
-    notifications = Notification.query.all()
+    # notifications = Notification.query.all()
+    user_id = crud.get_user_by_id(session['user_id']).user_id
+
+    notifications = Notification.query.filter(Notification.notifier_id == user_id)
 
     return render_template('notifications.html', notifications=notifications)
 
