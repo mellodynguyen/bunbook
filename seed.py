@@ -18,22 +18,42 @@ model.connect_to_db(server.app)
 server.app.app_context().push()
 model.db.create_all()
 
+def create_user_for_seed(email,password,screenname,bio, pronouns, location, birthday):
+    """Create and return a new user (seed file)."""
 
+    user = model.User(email=email, password=password, screenname=screenname,
+                      bio=bio, pronouns=pronouns, location=location, birthday=birthday)
+
+    return user
 # crud functions to create new user to make test users
 users_data = [
-    {"email": "mellody@test.com", "password": "oak123", "screenname": "babyoak"},
-    {"email": "dubu@test.com", "password": "dubu123", "screenname": "dubu"},
-    {"email": "pope@test.com", "password": "pope123", "screenname": "pope"},
-    {"email": "alex@test.com", "password": "kayfalc123", "screenname": "kayfalc"},
-    {"email": "kyle@test.com", "password": "klyde123", "screenname": "klyde"},
-    {"email": "kabocha@test.com", "password": "chibird123", "screenname": "HWLKabocha"},
-    {"email": "muse@test.com", "password": "snsdfan123", "screenname": "muse"},
-    {"email": "etree@test.com", "password": "etree123", "screenname": "etree"},
+    {"email": "mellody@test.com", "password": "oak123", "screenname": "babyoak",
+     "bio": "", "pronouns": "She/her", "location": "Dallas, TX", "birthday": "1998-11-06"},
+    {"email": "dubu@test.com", "password": "dubu123", "screenname": "dubu",
+     "bio": "", "pronouns": "She/her", "location": "Dallas, TX", "birthday": "1995-01-22"},
+    {"email": "pope@test.com", "password": "pope123", "screenname": "pope",
+     "bio": "", "pronouns": "He/Him", "location": "Akron, OH", "birthday": "1998-11-06" },
+    {"email": "alex@test.com", "password": "kayfalc123", "screenname": "kayfalc",
+     "bio": "", "pronouns": "He/Him", "location": "St. Louis, MO", "birthday": "1992-05-10"},
+    {"email": "kyle@test.com", "password": "klyde123", "screenname": "klyde",
+     "bio": "", "pronouns": "He/Him", "location": "Ontario, CA", "birthday": "1998-11-06"},
+    {"email": "kabocha@test.com", "password": "chibird123", "screenname": "HWLKabocha",
+     "bio": "", "pronouns": "He/Him", "location": "Honolulu, HI", "birthday": "1998-11-06"},
+    {"email": "muse@test.com", "password": "snsdfan123", "screenname": "muse",
+     "bio": "", "pronouns": "They/Them", "location": "Romania", "birthday": "1998-11-06"},
+    {"email": "etree@test.com", "password": "etree123", "screenname": "etree",
+     "bio": "", "pronouns": "He/Him", "location": "Dallas, TX", "birthday": "1993-06-12"},
+    {"email": "pianocellop@test.com", "password": "larry123", "screenname": "pianocellop",
+     "bio": "", "pronouns": "He/Him", "location": "Dallas, TX", "birthday": "1995-08-11"},
+    {"email": "jess@test.com", "password": "jess123", "screenname": "jessgonz",
+     "bio": "", "pronouns": "She/her", "location": "Dallas, TX", "birthday": "1995-07-14"},
+    {"email": "mochinica@test.com", "password": "monica123", "screenname": "mochinica",
+     "bio": "", "pronouns": "She/her", "location": "Seattle, WA", "birthday": "1995-12-27"},
 ]
 
 # commit all users, ** will unpack the values from the dictionary for named args
 for user_data in users_data:
-    user = crud.create_user(**user_data)
+    user = create_user_for_seed(**user_data)
     model.db.session.add(user)
 
 model.db.session.commit()
@@ -41,7 +61,7 @@ model.db.session.commit()
 user_ids = [user.user_id for user in model.User.query.all()]
 
 # crud func to create post for each user
-# user_id = 1, 2, 3, 4, 5, 6, 7, 8,
+# user_id = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
 for user_id in user_ids:
     post = crud.create_post(user_id=user_id, body="Test post", 
                             timestamp=datetime.now(), language="English")

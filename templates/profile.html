@@ -22,6 +22,7 @@
 </style>
 <!-- User Profile container -->
 <div class="usercontainer">
+    {{ user.screenname }}
     <div class="profilephoto mt-2 mb-2">
         <!-- Profile photo -->
         <!-- <img class="profilepicture" src="{{ user.profilepic }}"> -->
@@ -32,8 +33,20 @@
     </form>
     <br>
     User Bio:
-
+    {{ user.pronouns }}
+    {{ user.bio }}
     <br>
+    {{ user.birthday }}
+    {{ user.location }}
+    <br>
+    <!-- forms to update user's bio, location, -->
+    <form id="userbio">
+        <!-- screen/displayname -->
+        <!-- pronouns -->
+        <!-- bio -->
+        <!-- Location -->
+        <!-- Birthday -->
+    </form>
 
 </div>
 Posts:

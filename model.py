@@ -17,6 +17,10 @@ class User(db.Model):
     screenname = db.Column(db.String, nullable=False)
     # user profile photo
     profilepic = db.Column(db.String, default="")
+    bio = db.Column(db.String, default="")
+    pronouns = db.Column(db.String, default="")
+    location = db.Column(db.String, default="")
+    birthday = db.Column(db.Date, default="")
 
     # a user can have many posts
     user_posts = db.relationship("Post", back_populates="user")

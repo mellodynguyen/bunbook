@@ -4,17 +4,35 @@
 {% block title %}Bunbook {{ user.screenname }}{% endblock %}
 
 {% block content %}
+<style>
+    .profilephoto {
+    left: 10rem;
 
+    width: 150px;
+
+    height: 150px;
+
+    background-image: url("{{ user.profilepic }}");
+
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+}
+</style>
 <div class="usercontainer">
-    Profile photo
+    <div class="profilephoto mt-2 mb-2">
+        <!-- Profile photo -->
+        <!-- <img class="profilepicture" src="{{ user.profilepic }}"> -->
+    </div>
     <br>
     <img class="profilepicture" src="{{ user.profilepic }}">
     <br>
+    {{ user.pronouns }}
+    {{ user.birthday }}
+    {{ user.location }}
+    {{ user.bio }}
 </div>
-<br>
-User Bio:
 
-<br>
 
 Posts:
 {% for post in user.user_posts %}
