@@ -1,21 +1,45 @@
 .postblock {
     border: 5px black;
     border-style: dotted;
-    width: 500px;
+    max-width: 500px;
 }
 
 .postimages {
     height: 200px;
-    width: 200px;
+    max-width: 200px;
 }
 
 .replyblock {
     border: 2px black;
     border-style: dotted;
+    max-width: 300px;
+}
+
+.content {
+    /* set content div from the left nav bar to the end of page to 1300px wide */
+    max-width: 1300px;
+            width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 576px) {
+    /* Hide text in the sidebar on screens smaller than 576px */
+    .sidebar-text {
+        display: none;
+    }
+}
+/* body {
+    background-color: black;
+} */
+
+.sidebar {
     width: 300px;
 }
 
-.profilepicture {
-    height: 100px;
-    width: 100px;
+.sidebar-text {
+    font-size: 1.5em;
+}
+
+.borderge {
+    border-right: solid 1px black;
 }
