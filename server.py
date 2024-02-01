@@ -35,16 +35,17 @@ def homepage():
 def register_user():
     """Create a new user."""
 
-    email = request.form.get("email")
-    password = request.form.get("password")
-    screenname = request.form.get("screenname")
+    email = request.form.get('email')
+    password = request.form.get('password')
+    screenname = request.form.get('screenname')
+    birthday = request.form.get('birthday')
 
 
     user = crud.get_user_by_email(email)
     if user:
         flash("An account with that email already exists.")
     else:
-        user = crud.create_user(email, password, screenname)
+        user = crud.create_user(email, password, screenname, birthday)
         db.session.add(user)
         db.session.commit()
         flash("Account created!")
@@ -159,6 +160,28 @@ def upload_profile_picture():
     return redirect('/profile')
 
 
+# profile settings: allow user to make changes to their content
+@app.route('/profile/settings', methods=['POST'])
+def profile_settings():
+    """Process form to allow users to change their information"""
+
+    user_id = session['user_id']
+
+    screenname = request.form.get('screenname')
+    bio = request.form.get('bio')
+    pronouns = request.form.get('pronouns')
+    location = request.form.get('location')
+    birthday = request.form.get('birthday')
+
+    user_with_info = crud.create_user_info(user_id, screenname, bio, pronouns, 
+                                          location, birthday)
+
+    db.session.add(user_with_info)
+    db.session.commit()
+
+    return redirect('/profile')
+
+
 @app.route('/notifications')
 def notifications():
     """View the notifications page"""
@@ -182,8 +205,9 @@ def notifications():
 def specific_post(post_id):
     """View a specific post (from notifications)"""
 
+
     post = Post.query.get(post_id)
-    replies = Reply.query.all()
+    replies = Reply.query.filter(Reply.post_id == post_id).all()
 
     return render_template('post.html', post=post, replies=replies, 
                            calculatelikes=calculatelikes)

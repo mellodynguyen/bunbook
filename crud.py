@@ -2,10 +2,10 @@
 
 from model import db, User, Post, Images, PostLike, Reply, ReplyLike, Notification, connect_to_db
 
-def create_user(email, password, screenname):
+def create_user(email, password, screenname, birthday):
     """Create and return a new user."""
 
-    user = User(email=email, password=password, screenname=screenname)
+    user = User(email=email, password=password, screenname=screenname, birthday=birthday)
 
     return user
 
@@ -54,7 +54,15 @@ def create_user_pfp(user_id, image_link):
     
     return current_user
 
+def create_user_info(user_id, screenname, bio, pronouns, location, birthday):
+    current_user = get_user_by_id(user_id)
+    current_user.screenname = screenname
+    current_user.bio = bio
+    current_user.pronouns = pronouns
+    current_user.location = location
+    current_user.birthday = birthday
 
+    return current_user
 def create_like_for_reply(user_id, reply_id):
     """Create a like for a reply and return the like"""
 

@@ -18,9 +18,18 @@
     timestamp: {{ post.timestamp }}
     <br>
     Likes: {{ calculatelikes(post.like) }}
+    <form class="likeapost" action="/like-post" method="post">
+        <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
+        <button type="submit" name="likebutton">Like</button>
+    </form>
+    <form class="createreply" action="/create-reply" method="post">
+        <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
+        <input type="text" placeholder="Reply!" name="reply">
+        <input type="submit">
+      </form>
 </div>
 <!-- Do not need the "if reply" because jinja will not loop if list is empty -->
-<!-- {% if reply %} -->
+{% if replies %}
     {% for reply in replies %}
     <div class="replyblock">
         <!-- link to post here -->
@@ -45,6 +54,6 @@
         </form>
     </div>
     {% endfor %}
-<!-- {% endif %} -->
+{% endif %}
 
 {% endblock %}

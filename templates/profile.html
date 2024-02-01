@@ -27,10 +27,6 @@
         <!-- Profile photo -->
         <!-- <img class="profilepicture" src="{{ user.profilepic }}"> -->
     </div>
-    <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
-        <input type="file" name="profilepic">
-        <input type="submit">
-    </form>
     <br>
     User Bio:
     {{ user.pronouns }}
@@ -40,14 +36,37 @@
     {{ user.location }}
     <br>
     <!-- forms to update user's bio, location, -->
-    <form id="userbio">
-        <!-- screen/displayname -->
-        <!-- pronouns -->
-        <!-- bio -->
-        <!-- Location -->
-        <!-- Birthday -->
+    <!-- modal here -->
+    <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
+        <input type="file" name="profilepic">
+        <input type="submit">
     </form>
-
+    <form id="userbio" action="/profile/settings" method="post">
+        <!-- screen/displayname -->
+        <label for="user-screenname">Display Name</label>
+        <br>
+        <input type="text" name="screenname">
+        <br>
+        <!-- pronouns -->
+        <label for="user-pronouns">Pronouns</label>
+        <br>
+        <input type="text" name="pronouns">
+        <br>
+        <!-- bio -->
+        <label for="user-bio">Bio</label>
+        <br>
+        <textarea name="bio">{{ user.bio }}</textarea>
+        <br>
+        <!-- Location -->
+        <label for="user-location">Location</label>
+        <br>
+        <input type="text" name="location">
+        <br>
+        <!-- Birthday -->
+        <input type="date" id="birthday" name="birthday">
+        <input type="submit">
+    </form>
+    <!-- end modal -->
 </div>
 Posts:
 <br>

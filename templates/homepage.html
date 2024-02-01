@@ -3,28 +3,70 @@
 {% block title %}Bunbook{% endblock %}
 
 {% block content %}
-Are you a new user? Create an account!
+Are you a new user? 
 <br>
-<!-- Create account form -->
-    <form id="createacct" action="/createaccount" method="POST">
-
-        <input type="text" name="screenname" placeholder="Username" id="screenname">
-
-        <input type="text" name="email" placeholder="Email" id="user-email">
-
-        <input type="text" name="password" placeholder ="Password" id="user-password">
-        <input type="submit">
-    </form>
-
-Already have an account? Log In:
+Create an account!
 <br>
-<!-- Log In Form -->
-<form id ="login" action="/login" method="POST">
-    <input type="text" name="email" placeholder="Email" id="user-email">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-account">
+    Create Account
+</button>
+or
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
+    Log In
+</button>
+  
+  <!-- Create account Modal -->
+  <div class="modal fade" id="create-account" tabindex="-1" role="dialog" 
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!-- Create account form -->
+            <form id="createacct" action="/createaccount" method="POST">
 
-    <input type="text" name="password" placeholder ="Password" id="user-password">
-    <input type="submit">
-</form>
+                <input type="text" name="screenname" placeholder="Username" id="screenname">
 
+                <input type="text" name="email" placeholder="Email" id="user-email">
+
+                <input type="text" name="password" placeholder="Password" id="user-password">
+                <input type="date" id="birthday" name="birthday">
+                <!-- <input type="submit"> -->
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="submit" class="btn btn-primary">Create account</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log In Modal -->
+  <div class="modal fade" id="login" tabindex="-1" role="dialog" 
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!-- Log In Form -->
+            <form id ="login" action="/login" method="POST">
+                <input type="text" name="email" placeholder="Email" id="user-email">
+
+                <input type="text" name="password" placeholder ="Password" id="user-password">
+                <button type="submit" class="btn btn-primary">Log In</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 <script src="/static/js/myscript.js"></script>
 {% endblock %}
