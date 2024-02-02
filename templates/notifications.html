@@ -8,11 +8,18 @@ Notifications:
 <br>
 {% for notification in notifications %}
     {% if notification.type_of_thing == "reply" %}
+        <i class="fa-regular fa-comment-dots"></i>
+        <!-- notification instance has attribute called user, 
+            that attr stores instance of that user, 
+            notification.user.profilepic access that -->
+        <img class="notif-user-pic" src="{{ notification.user.profilepic }}">
         <a href="/user/{{ notification.user_id }}">{{ notification.user.screenname }}</a> 
         replied to your <a href="/post/{{ notification.post_id }}"post>post</a> 
         <br>
     
     {% elif notification.type_of_thing == "like" %}
+    <i class="fa-regular fa-heart"></i>
+    <img class="notif-user-pic" src="{{ notification.user.profilepic }}">
         <a href="/user/{{ notification.user_id }}">{{ notification.user.screenname }} </a>
             liked your <a href="/post/{{ notification.post_id }}"post>post</a> 
         <br>

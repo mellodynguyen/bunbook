@@ -70,6 +70,20 @@ for user_id in user_ids:
 model.db.session.commit()
 # add and commit posts to db - need posts in order for replies and likes
 
+# mellodypfp = crud.create_user_pfp(1, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706827621/zfclzlrqpwbsgwjvbtgk.jpg")
+# tinapfp =
+# popepfp =
+# alexpfp =
+# kylepfp =
+# kabochapfp =
+# musepfp =
+# etreepfp =
+# larrypfp =
+# jessicapfp =
+# monicapfp = 
+
+# model.db.session.add(mellodypfp)
+# model.db.session.commit()
 
 # crud func for reply, add and commit reply
 replies_data = [

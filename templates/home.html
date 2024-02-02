@@ -28,6 +28,7 @@ Welcome {{ session["screenname"] }}
   {% for post in posts %}
     <div class="container">
       <div class="postblock">
+        <img class="user-pic" src="{{ post.user.profilepic }}">
         username: {{ post.user.screenname }}
         <br>
         body: {{ post.body }}
@@ -48,20 +49,21 @@ Welcome {{ session["screenname"] }}
 
         <form class="likeapost" action="/like-post" method="post">
           <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
-          <button type="submit" name="likebutton">Like</button>
+          <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
         </form>
 
         <!-- Create a Reply form -->
         <form class="createreply" action="/create-reply" method="post">
           <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
           <input type="text" placeholder="Reply!" name="reply">
-          <input type="submit">
+          <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
         </form>
 
         <!-- Show replies to post if any -->
         <div class="replyblock" id="{{ post.post_id }}">
           {% if post.reply %}
             {% for reply in post.reply %}
+            <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
             username: {{ reply.reply_user.screenname }}
             <br>
             body: {{ reply.body }}
@@ -74,7 +76,7 @@ Welcome {{ session["screenname"] }}
             <!-- Like a reply form -->
             <form class="likeareply" action="/like-reply" method="post">
               <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
-              <button type="submit" name="likebutton">Like</button>
+              <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
             </form>
             {% endfor %}
           

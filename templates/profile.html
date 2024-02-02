@@ -20,6 +20,8 @@
     border-radius: 50%;
 }
 </style>
+
+
 <!-- User Profile container -->
 <div class="usercontainer">
     {{ user.screenname }}
@@ -28,51 +30,77 @@
         <!-- <img class="profilepicture" src="{{ user.profilepic }}"> -->
     </div>
     <br>
-    User Bio:
+    Bio:
     {{ user.pronouns }}
     {{ user.bio }}
     <br>
     {{ user.birthday }}
     {{ user.location }}
     <br>
-    <!-- forms to update user's bio, location, -->
-    <!-- modal here -->
-    <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
-        <input type="file" name="profilepic">
-        <input type="submit">
-    </form>
-    <form id="userbio" action="/profile/settings" method="post">
-        <!-- screen/displayname -->
-        <label for="user-screenname">Display Name</label>
-        <br>
-        <input type="text" name="screenname">
-        <br>
-        <!-- pronouns -->
-        <label for="user-pronouns">Pronouns</label>
-        <br>
-        <input type="text" name="pronouns">
-        <br>
-        <!-- bio -->
-        <label for="user-bio">Bio</label>
-        <br>
-        <textarea name="bio">{{ user.bio }}</textarea>
-        <br>
-        <!-- Location -->
-        <label for="user-location">Location</label>
-        <br>
-        <input type="text" name="location">
-        <br>
-        <!-- Birthday -->
-        <input type="date" id="birthday" name="birthday">
-        <input type="submit">
-    </form>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-user-content">
+        Edit Profile
+    </button>
+    <!-- edit user content modal -->
+    <div class="modal fade" id="edit-user-content" tabindex="-1" role="dialog" 
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!-- forms to update user's bio, location, -->
+            <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
+                <label for="pfpuploader">Change Profile Picture</label>
+                <br>
+                <input type="file" name="profilepic">
+                <input type="submit">
+            </form>
+            <form id="userbio" action="/profile/settings" method="post">
+                <!-- screen/displayname -->
+                <label for="user-screenname">Display Name</label>
+                <br>
+                <input type="text" name="screenname">
+                <br>
+                <!-- pronouns -->
+                <label for="user-pronouns">Pronouns</label>
+                <br>
+                <input type="text" name="pronouns">
+                <br>
+                <!-- bio -->
+                <label for="user-bio">Bio</label>
+                <br>
+                <textarea name="bio">{{ user.bio }}</textarea>
+                <br>
+                <!-- Location -->
+                <label for="user-location">Location</label>
+                <br>
+                <input type="text" name="location">
+                <br>
+                <!-- Birthday -->
+                <label for="Birthday">Birthday</label>
+                <br>
+                <input type="date" id="birthday" name="birthday">
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+  </div>
+</div>
     <!-- end modal -->
 </div>
+
+
+
 Posts:
 <br>
 <!-- only show user's posts -->
 {% for post in user.user_posts %}
     <div class="postblock">
+        <img class="user-pic" src="{{ post.user.profilepic }}">
         username: {{ post.user.screenname }}
         <br>
         body: {{ post.body }}
@@ -87,6 +115,17 @@ Posts:
         Post_id: {{ post.post_id }}
         <br>
         Likes: {{ calculatelikes(post.like) }}
+        <form class="likeapost" action="/like-post" method="post">
+            <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
+            <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
+        </form>
+        <!-- this routes to home currently, maybe change to redirect back to profile -->
+        <form class="createreply" action="/create-reply" method="post">
+            <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
+            <input type="text" placeholder="Reply!" name="reply">
+            <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
+        </form>
+        <!-- add replies here with show/hide display -->
     </div>
 {% endfor %}
 
@@ -99,6 +138,7 @@ Posts:
         <!-- then user from post table and then grabbed screenname -->
         In reply to: {{ reply.reply_post.user.screenname }}
         <br>
+        <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
         username: {{ reply.reply_user.screenname }}
         <br>
         body: {{ reply.body }}
@@ -111,7 +151,7 @@ Posts:
         <!-- Like a reply form -->
         <form class="likeareply" action="/like-reply" method="post">
             <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
-            <button type="submit" name="likebutton">Like</button>
+            <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
         </form>
     </div>
 {% endfor %}
