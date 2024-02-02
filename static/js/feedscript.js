@@ -1,3 +1,4 @@
+"use strict";
 // use setInterval to send a request to the server to check if there are any 
 // new posts, every 1 minute = 60,000 milliseconds 
 
@@ -79,48 +80,76 @@ setInterval(() => {
     checkForPosts();
 }, 60000);
 
+// load new posts button
+// document.getElementById('load-new-posts-button').addEventListener('click', () => {
+//     // check if the right button is being selected
+//     console.log('Button clicked');
+//     checkForPosts();
+// });
 
-document.getElementById('load-new-posts-button').addEventListener('click', () => {
-    // check if the right button is being selected
-    console.log('Button clicked');
-    checkForPosts();
-});
 
+// create reply and create likes for posts/likes functions for reply form under each post 
+// select all createreply forms by class
+// for each form in this list of forms, on submit (evt), prevent evt.default
+//  so evt.target  
+// fetch 
 
-// create reply and create likes for posts/likes functions
+// document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
+//     evt.preventDefault();
 
-// for reply form under each post 
-// select by class is .classname
-// document.querySelectorAll('.createreply')  = is a NodeList so it needs forEach
-document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
-    evt.preventDefault();
+//     // use event target to get particular form that was submitted
+//     evt.target.document.querySelector('#postid').value
 
-    // use event target to get particular form that was submitted
-    evt.target.document.querySelector('#postid').value
+//     // fetch(route)
+//     fetch('/create-reply')
+//         // response done => response text
+//         .then((response) => response.text())
+//         .then((reply) => {
+//             // add reply to display 
+//             document.querySelector(evt.target.document.querySelector('#postid')
+//                                     .value).insertAdjacentHTML(`${reply}`)
+//         })
+// });
 
-    // fetch(route)
-    fetch('/create-reply')
-        // response done => response text
-        .then((response) => response.text())
-        .then((reply) => {
-            // add reply to display 
-            document.querySelector(evt.target.document.querySelector('#postid')
-                                    .value).insertAdjacentHTML(`${reply}`)
-        })
-});
 
 // for liking a post 
-document.querySelectorAll('.likeapost').addEventListener('submit', (evt) => {
-    evt.preventDefault();
+// document.querySelectorAll('.likeapost').addEventListener('submit', (evt) => {
+//     evt.preventDefault();
 
-    evt.target.document.querySelector('#likepostid').value
+//     evt.target.document.querySelector('#likepostid').value
 
-});
+// });
+
 
 // for liking a reply
-document.querySelectorAll('.likeareply').addEventListener('submit', (evt) => {
-    evt.preventDefault();
+// document.querySelectorAll('.likeareply').addEventListener('submit', (evt) => {
+//     evt.preventDefault();
 
-    evt.target.document.querySelector('#likereplyid').value
+//     evt.target.document.querySelector('#likereplyid').value
 
-});
+// });
+
+// show/hide reply forms
+// getElementsByClassName will get every element and the func will need
+// to target a specific element 
+// button inside for loop so buttons with same ID (cant share same ID) 
+const replyButtons = document.querySelectorAll('.showreplies');
+  function showHideReply(evt) {
+
+    console.log(evt.target.getAttribute('data-postid'))
+    
+    
+    const postId = evt.target.getAttribute('data-postid');
+    const replyDiv = document.getElementById(`replyblock-${postId}`);
+
+    console.log(replyDiv)
+
+    if (replyDiv.style.display === "none" || replyDiv.style.display === "") {
+      replyDiv.style.display = "block";
+    } else {
+      replyDiv.style.display = "none";
+    }
+  }
+
+    for (const replyButton of replyButtons) {
+    replyButton.addEventListener('click', showHideReply)}
