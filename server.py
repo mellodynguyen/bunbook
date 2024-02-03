@@ -180,6 +180,22 @@ def upload_profile_picture():
 
     return redirect('/profile')
 
+@app.route('/profile-header', methods=['POST'])
+def upload_profile_header():
+    """Process form to allow users to upload a header photo"""
+
+    user_id = session['user_id']
+    
+    user_file = request.files.get('headerpic')
+    img_url = upload_to_cloudinary(user_file)
+    
+    headerpic = crud.create_user_header(user_id, img_url)
+
+    db.session.add(headerpic)
+    db.session.commit()
+
+    return redirect('/profile')
+
 
 # profile settings: allow user to make changes to their content
 @app.route('/profile/settings', methods=['POST'])

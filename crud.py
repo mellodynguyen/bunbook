@@ -54,6 +54,14 @@ def create_user_pfp(user_id, image_link):
     
     return current_user
 
+def create_user_header(user_id, image_link):
+    """Create image for user profile picture"""
+    current_user = get_user_by_id(user_id)
+    
+    current_user.headerpic = image_link
+    
+    return current_user
+
 def create_user_info(user_id, screenname, bio, pronouns, location, birthday):
     current_user = get_user_by_id(user_id)
     current_user.screenname = screenname

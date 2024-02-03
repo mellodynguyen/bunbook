@@ -21,7 +21,8 @@ class User(db.Model):
     pronouns = db.Column(db.String, default="")
     location = db.Column(db.String, default="")
     birthday = db.Column(db.Date, default="")
-
+    headerpic = db.Column(db.String, default="")
+    
     # a user can have many posts
     user_posts = db.relationship("Post", back_populates="user")
 

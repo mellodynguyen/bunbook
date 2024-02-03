@@ -24,6 +24,17 @@
 
 <!-- User Profile container -->
 <div class="usercontainer">
+    <div class="headerpic">
+    <img src="{{ user.headerpic }}">
+    </div>
+    <br>
+    <form id="headeruploader" action="/profile-header" method="post" enctype="multipart/form-data">
+        <label for="headeruploader">Change Header</label>
+        <br>
+        <input type="file" name="headerpic">
+        <input type="submit">
+    </form>
+
     {{ user.screenname }}
     <div class="profilephoto mt-2 mb-2">
         <!-- Profile photo -->
