@@ -43,7 +43,7 @@
 } */
 
 .sidebar {
-    width: 300px;
+    width: 250px;
 }
 
 .sidebar-text {
@@ -53,3 +53,16 @@
 .borderge {
     border-right: solid 1px black;
 }
+
+.search-bar-container {
+    width: 200px;
+    height: 100px;
+    float:right
+}
+
+.results-list {
+    /* Remove default list styling */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }

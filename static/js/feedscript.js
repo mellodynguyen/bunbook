@@ -149,7 +149,66 @@ const replyButtons = document.querySelectorAll('.showreplies');
     } else {
       replyDiv.style.display = "none";
     }
-  }
+  };
 
-    for (const replyButton of replyButtons) {
-    replyButton.addEventListener('click', showHideReply)}
+  for (const replyButton of replyButtons) {
+    replyButton.addEventListener('click', showHideReply)
+};
+
+
+// function search for users 
+const searchForm = document.getElementById('searchForm');
+const searchInput = document.getElementById('search-input');
+// const searchResults = document.getElementById('searchResults');
+const searchResults = document.querySelector('.results-list')
+
+// handler function for the listener, should take in etv (evt will get the sn)
+function fetchUser(evt) {
+    const screenname = evt.target.value
+    
+    // fetch route needs to match server route
+    // fetchUser(screenname)
+    return fetch(`/api/search/${screenname}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            // get the UL from the DOM  - /results-list
+            // document.querySelector('.results-list')
+            // clear out any existing results from prev. searches
+            searchResults.innerHTML = '';
+            // loop over data and add new li for each result
+            for (let i = 0; i < data.length; i++) {
+                const user = data[i];
+                const resultItem = document.createElement('li');
+                // resultItem.textContent = `${user.screenname}`;
+                // searchResults.appendChild(resultItem);
+
+                // create a link with href to user profile by using user_id
+                const link = document.createElement('a');
+                link.href = `/user/${user.user_id}`;
+                link.textContent = `${user.screenname}`;
+
+                // add event listener to click link
+                link.addEventListener('click', (event) => {
+                    // Prevent default link behavior
+                    event.preventDefault(); 
+                    // Call a function to handle navigation
+                    navigateToUserProfile(user.user_id); 
+                });
+                
+                resultItem.appendChild(link);
+                searchResults.appendChild(resultItem);
+            }
+            })
+};
+
+// searchForm add event listener
+searchInput.addEventListener('input', fetchUser);
+
+
+// Function to handle navigation to the user profile route
+function navigateToUserProfile(userId) {
+    // Redirect or navigate to the user profile route
+    window.location.href = `/user/${userId}`;
+};
+

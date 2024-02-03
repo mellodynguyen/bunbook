@@ -17,13 +17,38 @@
   </head>
   <body>
     <div class="content">
-    <!-- {# For demo purposes, show our sessions #} -->
-    <!-- {% if session %}
- 
-    <label>Flask Session</label>
-    {{ session }}
-  
-    {% endif %} -->
+
+
+      <!-- search bar -->
+      <div class="search-bar-container">
+        <form class="form-inline">
+            <div class="input-group">
+                <input class="form-control" type="search" id="search-input" placeholder="Search" aria-label="Search">
+                <!-- <div class="input-group-append"> -->
+                    <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                <!-- </div> -->
+            </div>
+        </form>
+        <div class="results-container">
+          <ul class="results-list" id="list">
+            <!-- <ul class="results-list mt-2 dropdown-menu" aria-labelledby="searchInput" id="searchResults">
+    
+            </ul> -->
+          </ul>
+        </div>
+    </div>
+
+    <!-- <div class="results-container">
+      <ul class="results-list" id="list">
+        <ul class="results-list mt-2 dropdown-menu" aria-labelledby="searchInput" id="searchResults">
+
+        </ul>
+      </ul>
+   </div> -->
+    <!-- side bar -->
+
+
+
     <!-- mx = margin -->
     <div class="container-fluid mx-1">
       <div class="row">
@@ -67,11 +92,7 @@
             </div>
           </nav>
           </div>
-          <!-- <ul>
-              {% for message in get_flashed_messages() %}
-                <li>{{ message }}</li>
-              {% endfor %}
-            </ul> -->
+
       <div class="col-8 mx-1">
       {% block content %}
       

@@ -105,6 +105,27 @@ def timeline():
     return render_template('home.html', posts=posts, replies=replies, 
                            calculatelikes=calculatelikes)
 
+# search bar to search for users
+@app.route('/api/search/<screenname>')
+def search_users(screenname):
+    
+     
+    results = User.query.filter(User.screenname.like(f'{screenname}%')).all()
+    # empty list if no results or a list of user objects 
+
+    # data to unpack to send with jsonify
+    # needs the user_id and screenname for the frontend 
+    user_data = []
+    for user in results:
+        # need to make a dictionary for every user
+        userdict = {}
+        # keys have to be strings b/c theyre not variables
+        userdict['screenname'] = user.screenname
+        userdict['user_id'] = user.user_id
+        user_data.append(userdict)
+
+    return jsonify(user_data)
+
 
 # get the latest post to refresh the timeline when user clicks a button 
 @app.route('/api/latest-posts')
