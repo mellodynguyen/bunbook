@@ -32,15 +32,15 @@ users_data = [
     {"email": "dubu@test.com", "password": "dubu123", "screenname": "dubu",
      "bio": "", "pronouns": "She/her", "location": "Dallas, TX", "birthday": "1995-01-22"},
     {"email": "pope@test.com", "password": "pope123", "screenname": "pope",
-     "bio": "", "pronouns": "He/Him", "location": "Akron, OH", "birthday": "1998-11-06" },
+     "bio": "", "pronouns": "He/Him", "location": "Akron, OH", "birthday": "1996-04-26" },
     {"email": "alex@test.com", "password": "kayfalc123", "screenname": "kayfalc",
      "bio": "", "pronouns": "He/Him", "location": "St. Louis, MO", "birthday": "1992-05-10"},
     {"email": "kyle@test.com", "password": "klyde123", "screenname": "klyde",
      "bio": "", "pronouns": "He/Him", "location": "Ontario, CA", "birthday": "1998-11-06"},
     {"email": "kabocha@test.com", "password": "chibird123", "screenname": "HWLKabocha",
-     "bio": "", "pronouns": "He/Him", "location": "Honolulu, HI", "birthday": "1998-11-06"},
+     "bio": "", "pronouns": "He/Him", "location": "Honolulu, HI", "birthday": "1990-12-19"},
     {"email": "muse@test.com", "password": "snsdfan123", "screenname": "muse",
-     "bio": "", "pronouns": "They/Them", "location": "Romania", "birthday": "1998-11-06"},
+     "bio": "", "pronouns": "They/Them", "location": "Romania", "birthday": "1994-11-10"},
     {"email": "etree@test.com", "password": "etree123", "screenname": "etree",
      "bio": "", "pronouns": "He/Him", "location": "Dallas, TX", "birthday": "1993-06-12"},
     {"email": "pianocellop@test.com", "password": "larry123", "screenname": "pianocellop",
@@ -70,31 +70,42 @@ for user_id in user_ids:
 model.db.session.commit()
 # add and commit posts to db - need posts in order for replies and likes
 
-# mellodypfp = crud.create_user_pfp(1, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706827621/zfclzlrqpwbsgwjvbtgk.jpg")
-# tinapfp =
-# popepfp =
-# alexpfp =
-# kylepfp =
-# kabochapfp =
-# musepfp =
-# etreepfp =
-# larrypfp =
-# jessicapfp =
+mellodypfp = crud.create_user_pfp(1, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706827621/zfclzlrqpwbsgwjvbtgk.jpg")
+tinapfp = crud.create_user_pfp(2, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019775/Screenshot_20231221_115438_Discord_y6wmft.jpg")
+popepfp = crud.create_user_pfp(3, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706736581/IMG_0516_kxjg3d.jpg")
+alexpfp = crud.create_user_pfp(4, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706736581/falcon_noggwd.jpg")
+kylepfp = crud.create_user_pfp(5, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019588/image_vtc0dz.png")
+kabochapfp = crud.create_user_pfp(6, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019590/unknown_isv14w.png")
+musepfp = crud.create_user_pfp(7, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019588/f1101192696_trjv4f.jpg")
+etreepfp = crud.create_user_pfp(8, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706829116/GEzAXsVbQAAxmTj_cxemmw.png")
+# larrypfp = 
+jessicapfp = crud.create_user_pfp(10, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019718/418610701_687423846643440_7581254869379702743_n_qwvhd2.jpg")
 # monicapfp = 
 
-# model.db.session.add(mellodypfp)
+model.db.session.add(mellodypfp, tinapfp)
 # model.db.session.commit()
+model.db.session.add(popepfp, kabochapfp)
+model.db.session.add(alexpfp, kylepfp)
+# model.db.session.commit()
+
+model.db.session.add(musepfp, etreepfp)
+model.db.session.add(jessicapfp)
+
+model.db.session.commit()
 
 # crud func for reply, add and commit reply
 replies_data = [
-    {"user_id": 1, "post_id": 1, "body": "Test Reply 1", "timestamp": datetime.now()},
-    {"user_id": 2, "post_id": 2, "body": "Test Reply 2", "timestamp": datetime.now()},
-    {"user_id": 3, "post_id": 4, "body": "Test Reply 3", "timestamp": datetime.now()},
-    {"user_id": 4, "post_id": 3, "body": "Test Reply 4", "timestamp": datetime.now()},
-    {"user_id": 5, "post_id": 5, "body": "Test Reply 5", "timestamp": datetime.now()},
+    {"user_id": 1, "post_id": 11, "body": "Test Reply 1", "timestamp": datetime.now()},
+    {"user_id": 2, "post_id": 10, "body": "Test Reply 2", "timestamp": datetime.now()},
+    {"user_id": 3, "post_id": 9, "body": "Test Reply 3", "timestamp": datetime.now()},
+    {"user_id": 4, "post_id": 8, "body": "Test Reply 4", "timestamp": datetime.now()},
+    {"user_id": 5, "post_id": 7, "body": "Test Reply 5", "timestamp": datetime.now()},
     {"user_id": 6, "post_id": 6, "body": "Test Reply 6", "timestamp": datetime.now()},
-    {"user_id": 7, "post_id": 6, "body": "Test Reply 7", "timestamp": datetime.now()},
-    {"user_id": 8, "post_id": 1, "body": "Test Reply 8", "timestamp": datetime.now()},
+    {"user_id": 7, "post_id": 5, "body": "Test Reply 7", "timestamp": datetime.now()},
+    {"user_id": 8, "post_id": 4, "body": "Test Reply 8", "timestamp": datetime.now()},
+    {"user_id": 9, "post_id": 3, "body": "Test Reply 8", "timestamp": datetime.now()},
+    {"user_id": 10, "post_id": 2, "body": "Test Reply 8", "timestamp": datetime.now()},
+    {"user_id": 11, "post_id": 1, "body": "Test Reply 8", "timestamp": datetime.now()},
 ]
 
 # Create and commit replies using a loop just like user_ids
@@ -121,16 +132,20 @@ likes_data_for_posts = [
     {"user_id": 1, "post_id": 1},
     {"user_id": 2, "post_id": 1},
     {"user_id": 3, "post_id": 1},
-    {"user_id": 2, "post_id": 2},
-    {"user_id": 3, "post_id": 2},
-    {"user_id": 3, "post_id": 4},
-    {"user_id": 4, "post_id": 3},
-    {"user_id": 4, "post_id": 5},
-    {"user_id": 5, "post_id": 6},
-    {"user_id": 6, "post_id": 1},
-    {"user_id": 7, "post_id": 8},
-    {"user_id": 7, "post_id": 1},
+    {"user_id": 4, "post_id": 2},
+    {"user_id": 5, "post_id": 2},
+    {"user_id": 6, "post_id": 4},
+    {"user_id": 7, "post_id": 3},
+    {"user_id": 8, "post_id": 5},
+    {"user_id": 9, "post_id": 6},
+    {"user_id": 10, "post_id": 1},
+    {"user_id": 11, "post_id": 8},
+    {"user_id": 3, "post_id": 1},
     {"user_id": 8, "post_id": 1},
+    {"user_id": 9, "post_id": 1},
+    {"user_id": 7, "post_id": 1},
+    {"user_id": 5, "post_id": 1},
+    {"user_id": 3, "post_id": 1},
 ]
 
 for like_data in likes_data_for_posts:
@@ -154,19 +169,22 @@ model.db.session.commit()
 
 # crud func for reply likes add and commit likes
 likes_data_for_replies = [
-    {"user_id": 1, "reply_id": 1},
-    {"user_id": 2, "reply_id": 1},
-    {"user_id": 3, "reply_id": 1},
-    {"user_id": 2, "reply_id": 2},
-    {"user_id": 3, "reply_id": 2},
+    {"user_id": 1, "reply_id": 2},
+    {"user_id": 2, "reply_id": 3},
     {"user_id": 3, "reply_id": 4},
-    {"user_id": 4, "reply_id": 3},
-    {"user_id": 4, "reply_id": 5},
-    {"user_id": 5, "reply_id": 6},
-    {"user_id": 6, "reply_id": 1},
+    {"user_id": 2, "reply_id": 5},
+    {"user_id": 3, "reply_id": 6},
+    {"user_id": 3, "reply_id": 7},
+    {"user_id": 4, "reply_id": 8},
+    {"user_id": 4, "reply_id": 9},
+    {"user_id": 5, "reply_id": 10},
+    {"user_id": 6, "reply_id": 11},
     {"user_id": 7, "reply_id": 8},
     {"user_id": 7, "reply_id": 1},
     {"user_id": 8, "reply_id": 1},
+    {"user_id": 9, "reply_id": 1},
+    {"user_id": 10, "reply_id": 1},
+    {"user_id": 11, "reply_id": 1},
 ]
     
 for like_data in likes_data_for_replies:
