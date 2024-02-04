@@ -71,3 +71,14 @@
     width: 50px;
     height: 250px;
 }
+
+.viewpost {
+    position: relative;
+}
+
+.viewpostge {
+    position: absolute; 
+    top: 0;
+    right: 0;
+    margin-right: 2px;
+}

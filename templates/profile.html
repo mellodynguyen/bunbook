@@ -105,57 +105,86 @@
 </div>
 
 
+<!-- profile nav tabs (posts/replies/likes) -->
+<ul class="nav nav-tabs" id="profile-tabs" data-bs-tabs="true">
+    <!-- posts -->
+    <li class="nav-item">
+      <a class="nav-link active" id="posts-tab" aria-current="page" href="#posts" data-bs-toggle="tab">Posts</a>
+    </li>
+    <!-- replies -->
+    <li class="nav-item">
+      <a class="nav-link" id="replies-tab "href="#replies" data-bs-toggle="tab">Replies</a>
+    </li>
+    <!-- likes -->
+    <!-- <li class="nav-item">
+      <a class="nav-link" href="#">Link</a>
+    </li> -->
+  </ul>
 
-Posts:
-<br>
+
 <!-- only show user's posts -->
-{% for post in user.user_posts %}
-    <div class="postblock">
-        <img class="user-pic" src="{{ post.user.profilepic }}">
-        username: {{ post.user.screenname }}
-        <br>
-        body: {{ post.body }}
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="posts">
+        {% for post in user.user_posts %}
+            <div class="postblock">
+                
+                <img class="user-pic" src="{{ post.user.profilepic }}">
+                <a href="/user/{{ post.user.user_id}}">{{ post.user.screenname }}</a>
+                <br>
+                body: {{ post.body }}
 
-        {% if post.images %}
-        <br>
-        <img class="postimages" src="{{ post.images[0].image_link }}">
-        <br>
-        {% endif %}
-        <br>
-        timestamp: {{ post.timestamp }}
-        Post_id: {{ post.post_id }}
-        <br>
-        Likes: {{ calculatelikes(post.like) }}
-        <form class="likeapost" action="/like-post" method="post">
-            <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
-            <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
-        </form>
-        <!-- this routes to home currently, maybe change to redirect back to profile -->
-        <form class="createreply" action="/create-reply" method="post">
-            <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
-            <input type="text" placeholder="Reply!" name="reply">
-            <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
-        </form>
-        <!-- add replies here with show/hide display -->
+                {% if post.images %}
+                <br>
+                <img class="postimages" src="{{ post.images[0].image_link }}">
+                <br>
+                {% endif %}
+                <br>
+                timestamp: {{ post.timestamp }}
+                <!-- Post_id: {{ post.post_id }} -->
+                <br>
+                Likes: {{ calculatelikes(post.like) }}
+                <form class="likeapost" action="/like-post" method="post">
+                    <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
+                    <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
+                </form>
+                <!-- this routes to home currently, maybe change to redirect back to profile -->
+                <form class="createreply" action="/create-reply" method="post">
+                    <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
+                    <input type="text" placeholder="Reply!" name="reply">
+                    <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
+                </form>
+                <!-- add replies here with show/hide display -->
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
+
+
 
 <!-- only show user's replies -->
+<div class="tab-pane fade" id="replies">
 {% for reply in user.user_replies %}
     <div class="replyblock">
         <!-- link to post here -->
         
         <!-- in reply, reply table reply_post = post from Post table -->
         <!-- then user from post table and then grabbed screenname -->
-        In reply to: {{ reply.reply_post.user.screenname }}
+        In reply to: <a href="/users/{{ reply.reply_post.user.screenname }}">{{ reply.reply_post.user.screenname }}</a>
         <br>
+        
+        <div class="viewpost">
         <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
-        username: {{ reply.reply_user.screenname }}
+        <a href="/users/{{ reply.reply_user.user_id }}">{{ reply.reply_user.screenname }}</a>
+
+        <a href="/post/{{ reply.reply_post.post_id }}" class="viewpostge" title="View Post">
+            <i class="fa-solid fa-up-right-from-square"></i>
+        </a>
+        </div>
+
         <br>
         body: {{ reply.body }}
         <br>
         time: {{ reply.timestamp }}
-        reply_id {{ reply.reply_id }}
+        <!-- reply_id {{ reply.reply_id }} -->
         <br>
         Likes: {{ calculatelikes(reply.like) }}
         <br>
@@ -165,6 +194,10 @@ Posts:
             <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
         </form>
     </div>
+
 {% endfor %}
+</div>
+
+</div>
 
 {% endblock %}

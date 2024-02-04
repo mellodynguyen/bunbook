@@ -28,13 +28,23 @@ Welcome {{ session["screenname"] }}
   {% for post in posts %}
     <!-- <div class="container"> -->
       <div class="postblock">
-        <img class="user-pic" src="{{ post.user.profilepic }}">
-        username: {{ post.user.screenname }}
+        <!-- <img class="user-pic" src="{{ post.user.profilepic }}">
+        <a href="/user/{{ post.user.user_id }}"> {{ post.user.screenname }}</a> -->
+
+        <!-- view specific post -->
+        <div class="viewpost">
+          <img class="user-pic" src="{{ post.user.profilepic }}">
+          <a href="/user/{{ post.user.user_id }}"> {{ post.user.screenname }}</a>
+
+          <a href="/post/{{ post.post_id }}" class="viewpostge" title="View Post">
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </a>
+        </div>
         <br>
         body: {{ post.body }}
         <br>
         time: {{ post.timestamp }}
-        Post_id: {{ post.post_id }}
+        <!-- Post_id: {{ post.post_id }} -->
         <br> 
         
         <!-- Show a post's images if any -->
@@ -46,7 +56,6 @@ Welcome {{ session["screenname"] }}
         <!-- post.like will give a list, we want length of list -->
         Likes: {{ calculatelikes(post.like) }}
         <!-- Like a post form -->
-
         <form class="likeapost" action="/like-post" method="post">
           <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
           <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
@@ -59,18 +68,20 @@ Welcome {{ session["screenname"] }}
           <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
         </form>
 
-        <!-- Show replies to post if any -->
+        <!-- Show replies button-->
         <button class="showreplies" data-postid="{{ post.post_id }}">Show Replies</button>
+
+        <!-- Show replies to post if any -->
         <div class="replyblock" id="replyblock-{{ post.post_id }}" style="display:none">
           {% if post.reply %}
             {% for reply in post.reply %}
             <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
-            username: {{ reply.reply_user.screenname }}
+            <a href="/user/{{ reply.reply_user.user_id }}">{{ reply.reply_user.screenname }}</a>
             <br>
             body: {{ reply.body }}
             <br>
             time: {{ reply.timestamp }}
-            reply_id {{ reply.reply_id }}
+            <!-- reply_id {{ reply.reply_id }} -->
             <br>
             Likes: {{ calculatelikes(reply.like) }}
             <br>
@@ -85,6 +96,7 @@ Welcome {{ session["screenname"] }}
         </div>
 
       </div>
+
   <!-- </div> -->
 {% endfor %}
 
