@@ -80,16 +80,16 @@ musepfp = crud.create_user_pfp(7, "https://res.cloudinary.com/dzvyvbnmf/image/up
 etreepfp = crud.create_user_pfp(8, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706829116/GEzAXsVbQAAxmTj_cxemmw.png")
 # larrypfp = 
 jessicapfp = crud.create_user_pfp(10, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019718/418610701_687423846643440_7581254869379702743_n_qwvhd2.jpg")
-# monicapfp = 
+monicapfp = crud.create_user_pfp(11, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707022572/IMG_1205_ereuke.jpg")
 
 model.db.session.add(mellodypfp, tinapfp)
-# model.db.session.commit()
+
 model.db.session.add(popepfp, kabochapfp)
 model.db.session.add(alexpfp, kylepfp)
-# model.db.session.commit()
+
 
 model.db.session.add(musepfp, etreepfp)
-model.db.session.add(jessicapfp)
+model.db.session.add(jessicapfp, monicapfp)
 
 model.db.session.commit()
 
