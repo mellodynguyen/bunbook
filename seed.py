@@ -4,6 +4,7 @@ import os
 import json
 from random import choice, randint
 from datetime import datetime
+from passlib.hash import argon2
 
 import crud
 import model
@@ -52,9 +53,21 @@ users_data = [
 ]
 
 # commit all users, ** will unpack the values from the dictionary for named args
+# for user_data in users_data:
+#     user = create_user_for_seed(**user_data)
+#     model.db.session.add(user)
+
 for user_data in users_data:
+    email = user_data["email"]
+    password = user_data["password"]
+    # Hash the password using argon2
+    hashed_password = argon2.hash(password) 
+    # Update the password in the user data
+    user_data["password"] = hashed_password
     user = create_user_for_seed(**user_data)
     model.db.session.add(user)
+
+model.db.session.commit()
 
 model.db.session.commit()
 
@@ -78,7 +91,7 @@ kylepfp = crud.create_user_pfp(5, "https://res.cloudinary.com/dzvyvbnmf/image/up
 kabochapfp = crud.create_user_pfp(6, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019590/unknown_isv14w.png")
 musepfp = crud.create_user_pfp(7, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019588/f1101192696_trjv4f.jpg")
 etreepfp = crud.create_user_pfp(8, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1706829116/GEzAXsVbQAAxmTj_cxemmw.png")
-# larrypfp = 
+larrypfp = crud.create_user_pfp(9, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707031142/W2mRD_5c_veanhu.jpg")
 jessicapfp = crud.create_user_pfp(10, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707019718/418610701_687423846643440_7581254869379702743_n_qwvhd2.jpg")
 monicapfp = crud.create_user_pfp(11, "https://res.cloudinary.com/dzvyvbnmf/image/upload/v1707022572/IMG_1205_ereuke.jpg")
 
@@ -87,9 +100,9 @@ model.db.session.add(mellodypfp, tinapfp)
 model.db.session.add(popepfp, kabochapfp)
 model.db.session.add(alexpfp, kylepfp)
 
-
 model.db.session.add(musepfp, etreepfp)
 model.db.session.add(jessicapfp, monicapfp)
+model.db.session.add(larrypfp)
 
 model.db.session.commit()
 

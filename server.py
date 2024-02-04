@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, flash, session, redirect, jsonify, url_for
 from model import connect_to_db, db, User, Post, Reply, PostLike, ReplyLike, Notification
+from passlib.hash import argon2
 import os
 import crud
 import datetime
@@ -45,7 +46,9 @@ def register_user():
     if user:
         flash("An account with that email already exists.")
     else:
-        user = crud.create_user(email, password, screenname, birthday)
+        hashed_password = argon2.hash(password)
+        user = crud.create_user(email, hashed_password, screenname, birthday)
+        # user = crud.create_user(email, password, screenname, birthday)
         db.session.add(user)
         db.session.commit()
         flash("Account created!")
@@ -65,7 +68,8 @@ def process_login():
     password = request.form.get("password")
 
     user = crud.get_user_by_email(email)
-    if not user or user.password != password:
+    # if not user or user.password != password:
+    if not user or not argon2.verify(password, user.password):
         flash("The email or password you entered was incorrect.")
         return redirect('/')
     else:

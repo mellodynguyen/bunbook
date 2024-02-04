@@ -2,6 +2,7 @@
 
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+from passlib.hash import argon2
 
 # give us a database (db) object 
 db = SQLAlchemy()
@@ -34,6 +35,15 @@ class User(db.Model):
     # book = db.relationship("Book", back_populates="printings")
     # Class(Book) name and back_populates is how you relate the attributes in
     # the different classes to each other 
+
+    
+    def set_password(self, password):
+        """Set the user's password with a hashed version using Argon2."""
+        self.password = argon2.hash(password)
+
+    def check_password(self, password):
+        """Check if the entered password is correct using Argon2."""
+        return argon2.verify(password, self.password)
 
     def __repr__(self):
         return f'<User user_id={self.user_id} email={self.email}>'
