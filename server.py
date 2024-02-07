@@ -44,14 +44,14 @@ def register_user():
 
     user = crud.get_user_by_email(email)
     if user:
-        flash("An account with that email already exists.")
+        flash("An account with that email already exists.", "error")
     else:
         hashed_password = argon2.hash(password)
         user = crud.create_user(email, hashed_password, screenname, birthday)
         # user = crud.create_user(email, password, screenname, birthday)
         db.session.add(user)
         db.session.commit()
-        flash("Account created!")
+        # flash("Account created!", "welcome")
 
         session["user_id"] = user.user_id
         session["screenname"] = user.screenname
@@ -70,7 +70,7 @@ def process_login():
     user = crud.get_user_by_email(email)
     # if not user or user.password != password:
     if not user or not argon2.verify(password, user.password):
-        flash("The email or password you entered was incorrect.")
+        flash("The email or password you entered was incorrect.", "error")
         return redirect('/')
     else:
         # Log in user by storing the user's email in session
@@ -88,7 +88,7 @@ def process_logout():
     session.pop('user_id', None)
     session.pop('screenname', None)
     
-    flash("Logged out!")
+    flash("Logged out!", "welcome")
 
     return redirect('/')
 

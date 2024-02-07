@@ -1,84 +1,185 @@
-.postblock {
-    border: 5px black;
-    border-style: dotted;
-    max-width: 500px;
+.error {
+    /* flash message */
+    background-color: rgb(248, 179, 197);
+    max-width: 400px;
+    border-radius: 1px;
 }
+
+.body {
+    font-family: 'Work Sans', sans-serif;
+    /* background-color: rgb(red, green, blue); */
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Patrick Hand', cursive;
+    /* font-family: 'Short Stack', cursive; */
+
+}
+
+.user-url:link {
+    color: rgb(185, 186, 248);
+    text-decoration: none;
+}
+.login-box {
+    /* log in modal */
+    background-color: rgb(185 186, 248);
+    color: white;
+    /* border: 2px solid rgb(247, 214, 222); */
+    max-width: 600px;
+    padding-right: 48px;
+    padding-left: 48px;
+}
+
+/* modals */
+.modal-content {
+    background-color: rgb(185, 186, 248);
+    border-radius: 10px !important;
+}
+
+.modal-body {
+    background-color: rgb(185, 186, 248);
+    /* 0 (Top left) 0 (Top right) 10px (bottom right) 10px (Bottom left) */
+    border-radius: 0 0 10px 10px;
+}
+.modal-header {
+    background-color: rgb(185, 186, 248);
+    border-bottom: 0px;
+}
+.modal-title {
+    justify-content: center;
+}
+
+.btn-bunbook {
+    /* modal buttons */
+    /* periwinkle: 185, 186, 248 */
+    border-color: rgb(185, 186, 248);
+    background-color: rgb(247, 214, 222);
+    color: white;
+    width: 100%;
+}
+
+.btn-bunbook:hover {
+    /* button on hover */
+    border-color: rgb(185, 186, 248);
+    background-color: rgb(248, 179, 197);
+}
+
+.btn-close {
+    /* close button on modals */
+    margin-right: 2px;
+}
+
+.post-btn {
+    /* border-color: rgb(185, 186, 248); */
+    background-color: rgb(159, 195, 250);
+}
+
+
 .user-pic {
+    /* user's profile pic thumbnail on post */
     border-radius: 25px;
     width: 50px;
     height: 50px;
 }
 
 .notif-user-pic {
+    /* user's pics for notification's page */
     border-radius: 25px;
     width: 25px;
     height: 25px;
 }
 .postimages {
-    height: 200px;
-    max-width: 200px;
+    /* images for posts */
+    border: 1px solid rgb(159, 195, 250);
+    height: 400px;
+    width: 400px;
 }
 
 .replyblock {
-    border: 2px black;
-    border-style: dotted;
+    /* border: 2px black;
+    border-style: dotted; */
     max-width: 300px;
 }
 
-.content {
-    /* set content div from the left nav bar to the end of page to 1300px wide */
-    max-width: 1300px;
-            width: 100%;
-    margin: 0 auto;
+.sidebar {
+    background-color: rgb(7, 9, 28);
 }
 
-@media (max-width: 576px) {
-    /* Hide text in the sidebar on screens smaller than 576px */
-    .sidebar-text {
-        display: none;
-    }
-}
-/* body {
-    background-color: black;
+/* .search-bar {
+    background-color: rgb(185, 186, 248);
 } */
 
-.sidebar {
-    width: 250px;
+/* sidebar's list items */
+.list-group-item {
+    max-width: 200px;
+    background-color: rgb(7, 9, 28);
+    color: white;
+    font-size: large;    
 }
 
+.list-group-item:hover{
+    background-color: rgb(185, 186, 248)
+}
 .sidebar-text {
     font-size: 1.5em;
+    font-family: 'Patrick Hand', cursive;
 }
 
-.borderge {
-    border-right: solid 1px black;
-}
-
-.search-bar-container {
-    width: 200px;
-    height: 100px;
-    float:right
-}
-
+/* Remove default list styling */
 .results-list {
-    /* Remove default list styling */
+    /* border: 1px solid rgb(159, 195, 250); */
+    color: (246, 240, 220);
+    background-color: rgb(185, 186, 248);
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
 
 .headerpic {
+    /* user's header pic for their profile  */
     width: 50px;
     height: 250px;
 }
 
-.viewpost {
+.welcome-msg {
+    margin-left: 25px;
+    color: rgb(246, 240, 220);
+}
+.create-post-container {
+    /* width: 200;
+    height: 500; */
+    background-color: rgb(185, 186, 248);
+}
+
+.create-post-box {
+  /* initialize flexbox */
+  display: flex;
+
+  /* properties to arrange child elements */
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.postblock-header {
+    /* line up user post, name and view post button */
     position: relative;
 }
 
-.viewpostge {
+.btn-viewpost {
+    /* view post button */
     position: absolute; 
     top: 0;
     right: 0;
     margin-right: 2px;
+}
+
+.timeline-box {
+  display: flex;
+ 
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  margin-left: 25px;
 }

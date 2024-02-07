@@ -1,44 +1,59 @@
 {% extends 'base.html' %}
 
-{% block title %}Bunbook{% endblock %}
+{% block title %}Welcome to Bunbook!{% endblock %}
 
 {% block content %}
-Are you a new user? 
-<br>
-Create an account!
-<br>
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-account">
-    Create Account
-</button>
-or
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
-    Log In
-</button>
+<div class="centered-div d-flex justify-content-center align-items-center">
+
+  <div class="login-box pt-5 pb-5 rounded">
+      <h1 class="pb-4">Welcome To Bunbook</h1>
+      <div class="row justify-content-center">
+          <div class="row text-center">
+              <button type="button" class="btn btn-bunbook" data-bs-toggle="modal"
+                  data-bs-target="#create-account">
+                  Create Account
+              </button>
+          </div>
+          <h3 class="text-center">or</h3>
+          <div class="row text-center">
+              <button type="button" class="btn btn-bunbook" data-bs-toggle="modal" data-bs-target="#login">
+                  Log In
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
   
   <!-- Create account Modal -->
   <div class="modal fade" id="create-account" tabindex="-1" role="dialog" 
     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"></h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <h5 class="modal-title mx-auto text-white" id="exampleModalLabel">Create an Account</h5>
+          <button type="button" data-bs-dismiss="modal" class="btn-close"
+          aria-label="Close"></button>
           </button>
         </div>
         <div class="modal-body">
             <!-- Create account form -->
             <form id="createacct" action="/createaccount" method="POST">
-
-                <input type="text" name="screenname" placeholder="Username" id="screenname">
-
-                <input type="text" name="email" placeholder="Email" id="user-email">
-
-                <input type="password" name="password" placeholder="Password" id="user-password">
+              <div class="row">
+                <div class="col-sm">
+                  <input type="text" name="email" placeholder="Email" id="user-email">
+                </div>
+                <div class="col-sm">
+                  <input type="password" name="password" placeholder="Password" id="user-password">
+                </div>
+                <div class="col-sm">
+                  <input type="text" name="screenname" placeholder="Username" id="screenname">
+                </div>
+                <label for="birthday">Birthday</label>
                 <input type="date" id="birthday" name="birthday">
                 <!-- <input type="submit"> -->
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="submit" class="btn btn-primary">Create account</button>
+                <button type="submit" class="btn btn-bunbook">Create account</button>
+              </div>
             </form>
         </div>
       </div>
@@ -48,12 +63,13 @@ or
   <!-- Log In Modal -->
   <div class="modal fade" id="login" tabindex="-1" role="dialog" 
     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"></h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <!-- <div class="modal-header"> -->
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <h5 class="modal-title mx-auto text-white" id="exampleModalLabel">Log In</h5>
+          <button type="button" data-bs-dismiss="modal" class="btn-close"
+          aria-label="Close"></button>
           </button>
         </div>
         <div class="modal-body">
@@ -62,11 +78,12 @@ or
                 <input type="text" name="email" placeholder="Email" id="user-email">
 
                 <input type="password" name="password" placeholder ="Password" id="user-password">
-                <button type="submit" class="btn btn-primary">Log In</button>
+                <button type="submit" class="btn btn-bunbook">Log In</button>
             </form>
         </div>
       </div>
     </div>
   </div>
+</div>
 <script src="/static/js/myscript.js"></script>
 {% endblock %}

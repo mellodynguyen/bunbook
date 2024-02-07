@@ -1,203 +1,193 @@
 {% extends 'feedprofilebase.html' %}
 
 <!-- change title to display user info/screen name  -->
-{% block title %}Bunbook Profile{% endblock %}
-
+{% block title %}
+    Bunbook {{ user.screenname }}'s Profile
+{% endblock %}
 
 {% block content %}
-<style>
-    .profilephoto {
-    left: 10rem;
+<div class="col-lg-6 col-md-9 col-12">
+    <style>
+        .profilephoto {
+            left: 10rem;
+            width: 150px;
+            height: 150px;
+            background-image: url("{{ user.profilepic }}");
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+        }
+    </style>
 
-    width: 150px;
-
-    height: 150px;
-
-    background-image: url("{{ user.profilepic }}");
-
-    background-size: cover;
-    background-position: center;
-    border-radius: 50%;
-}
-</style>
-
-
-<!-- User Profile container -->
-<div class="usercontainer">
-    <div class="headerpic">
-    <img src="{{ user.headerpic }}">
-    </div>
-    <br>
-    <form id="headeruploader" action="/profile-header" method="post" enctype="multipart/form-data">
-        <label for="headeruploader">Change Header</label>
-        <br>
-        <input type="file" name="headerpic">
-        <input type="submit">
-    </form>
-
-    {{ user.screenname }}
-    <div class="profilephoto mt-2 mb-2">
-        <!-- Profile photo -->
-        <!-- <img class="profilepicture" src="{{ user.profilepic }}"> -->
-    </div>
-    <br>
-    Bio:
-    {{ user.pronouns }}
-    {{ user.bio }}
-    <br>
-    {{ user.birthday }}
-    {{ user.location }}
-    <br>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-user-content">
-        Edit Profile
-    </button>
-    <!-- edit user content modal -->
-    <div class="modal fade" id="edit-user-content" tabindex="-1" role="dialog" 
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"></h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <!-- User Profile container -->
+    <div class="usercontainer">
+        <div class="headerpic">
+            <img src="{{ user.headerpic }}">
         </div>
-        <div class="modal-body">
-            <!-- forms to update user's bio, location, -->
-            <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
-                <label for="pfpuploader">Change Profile Picture</label>
-                <br>
-                <input type="file" name="profilepic">
-                <input type="submit">
-            </form>
-            <form id="userbio" action="/profile/settings" method="post">
-                <!-- screen/displayname -->
-                <label for="user-screenname">Display Name</label>
-                <br>
-                <input type="text" name="screenname">
-                <br>
-                <!-- pronouns -->
-                <label for="user-pronouns">Pronouns</label>
-                <br>
-                <input type="text" name="pronouns">
-                <br>
-                <!-- bio -->
-                <label for="user-bio">Bio</label>
-                <br>
-                <textarea name="bio">{{ user.bio }}</textarea>
-                <br>
-                <!-- Location -->
-                <label for="user-location">Location</label>
-                <br>
-                <input type="text" name="location">
-                <br>
-                <!-- Birthday -->
-                <label for="Birthday">Birthday</label>
-                <br>
-                <input type="date" id="birthday" name="birthday">
-                <input type="submit">
-            </form>
-        </div>
-    </div>
-  </div>
-</div>
-    <!-- end modal -->
-</div>
-
-
-<!-- profile nav tabs (posts/replies/likes) -->
-<ul class="nav nav-tabs" id="profile-tabs" data-bs-tabs="true">
-    <!-- posts -->
-    <li class="nav-item">
-      <a class="nav-link active" id="posts-tab" aria-current="page" href="#posts" data-bs-toggle="tab">Posts</a>
-    </li>
-    <!-- replies -->
-    <li class="nav-item">
-      <a class="nav-link" id="replies-tab "href="#replies" data-bs-toggle="tab">Replies</a>
-    </li>
-    <!-- likes -->
-    <!-- <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li> -->
-  </ul>
-
-
-<!-- only show user's posts -->
-<div class="tab-content">
-    <div class="tab-pane fade show active" id="posts">
-        {% for post in user.user_posts %}
-            <div class="postblock">
-                
-                <img class="user-pic" src="{{ post.user.profilepic }}">
-                <a href="/user/{{ post.user.user_id}}">{{ post.user.screenname }}</a>
-                <br>
-                body: {{ post.body }}
-
-                {% if post.images %}
-                <br>
-                <img class="postimages" src="{{ post.images[0].image_link }}">
-                <br>
-                {% endif %}
-                <br>
-                timestamp: {{ post.timestamp }}
-                <!-- Post_id: {{ post.post_id }} -->
-                <br>
-                Likes: {{ calculatelikes(post.like) }}
-                <form class="likeapost" action="/like-post" method="post">
-                    <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
-                    <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
-                </form>
-                <!-- this routes to home currently, maybe change to redirect back to profile -->
-                <form class="createreply" action="/create-reply" method="post">
-                    <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
-                    <input type="text" placeholder="Reply!" name="reply">
-                    <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
-                </form>
-                <!-- add replies here with show/hide display -->
-            </div>
-        {% endfor %}
-    </div>
-
-
-
-<!-- only show user's replies -->
-<div class="tab-pane fade" id="replies">
-{% for reply in user.user_replies %}
-    <div class="replyblock">
-        <!-- link to post here -->
-        
-        <!-- in reply, reply table reply_post = post from Post table -->
-        <!-- then user from post table and then grabbed screenname -->
-        In reply to: <a href="/users/{{ reply.reply_post.user.screenname }}">{{ reply.reply_post.user.screenname }}</a>
         <br>
-        
-        <div class="viewpost">
-        <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
-        <a href="/users/{{ reply.reply_user.user_id }}">{{ reply.reply_user.screenname }}</a>
-
-        <a href="/post/{{ reply.reply_post.post_id }}" class="viewpostge" title="View Post">
-            <i class="fa-solid fa-up-right-from-square"></i>
-        </a>
-        </div>
-
-        <br>
-        body: {{ reply.body }}
-        <br>
-        time: {{ reply.timestamp }}
-        <!-- reply_id {{ reply.reply_id }} -->
-        <br>
-        Likes: {{ calculatelikes(reply.like) }}
-        <br>
-        <!-- Like a reply form -->
-        <form class="likeareply" action="/like-reply" method="post">
-            <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
-            <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
+        <form id="headeruploader" action="/profile-header" method="post" enctype="multipart/form-data">
+            <label for="headeruploader">Change Header</label>
+            <br>
+            <input type="file" name="headerpic">
+            <input type="submit">
         </form>
+
+        {{ user.screenname }}
+        <!-- profile photo container -->
+        <div class="profilephoto mt-2 mb-2"></div>
+        <br>
+
+        Bio:
+        {{ user.pronouns }}
+        {{ user.bio }}
+        <br>
+        {{ user.birthday }}
+        {{ user.location }}
+        <br>
+        <!-- edit profile button -->
+        <button type="button" class="btn btn-bunbook" data-bs-toggle="modal" data-bs-target="#edit-user-content">
+            Edit Profile
+        </button>
+
+        <!-- edit user content modal -->
+        <div class="modal fade" id="edit-user-content" tabindex="-1" role="dialog" 
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- forms to update user's bio, location, -->
+                        <form id="pfpuploader" action="/profile-pic" method="post" enctype="multipart/form-data">
+                            <label for="pfpuploader">Change Profile Picture</label>
+                            <br>
+                            <input type="file" name="profilepic">
+                            <input type="submit">
+                        </form>
+                        <form id="userbio" action="/profile/settings" method="post">
+                            <!-- screen/displayname -->
+                            <label for="user-screenname">Display Name</label>
+                            <br>
+                            <input type="text" name="screenname">
+                            <br>
+                            <!-- pronouns -->
+                            <label for="user-pronouns">Pronouns</label>
+                            <br>
+                            <input type="text" name="pronouns">
+                            <br>
+                            <!-- bio -->
+                            <label for="user-bio">Bio</label>
+                            <br>
+                            <textarea name="bio">{{ user.bio }}</textarea>
+                            <br>
+                            <!-- Location -->
+                            <label for="user-location">Location</label>
+                            <br>
+                            <input type="text" name="location">
+                            <br>
+                            <!-- Birthday -->
+                            <label for="Birthday">Birthday</label>
+                            <br>
+                            <input type="date" id="birthday" name="birthday">
+                            <input type="submit">
+                        </form>
+                    </div> 
+                </div>
+            </div>
+        </div>
+
+        <!-- profile nav tabs (posts/replies/likes) -->
+        <ul class="nav nav-tabs" id="profile-tabs" data-bs-tabs="true">
+            <!-- posts -->
+            <li class="nav-item">
+                <a class="nav-link active" id="posts-tab" aria-current="page" href="#posts" data-bs-toggle="tab">Posts</a>
+            </li>
+            <!-- replies -->
+            <li class="nav-item">
+                <a class="nav-link" id="replies-tab "href="#replies" data-bs-toggle="tab">Replies</a>
+            </li>
+            <!-- likes -->
+            <!-- <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+            </li> -->
+        </ul>
     </div>
 
-{% endfor %}
-</div>
+    <!-- only show user's posts -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="posts">
+            {% for post in user.user_posts %}
+                <div class="postblock">
+                    <img class="user-pic" src="{{ post.user.profilepic }}">
+                    <a href="/user/{{ post.user.user_id}}">{{ post.user.screenname }}</a>
+                    <br>
+                    body: {{ post.body }}
 
-</div>
+                    {% if post.images %}
+                    <br>
+                    <img class="postimages" src="{{ post.images[0].image_link }}">
+                    <br>
+                    {% endif %}
+                    <br>
+                    timestamp: {{ post.timestamp }}
+                    <!-- Post_id: {{ post.post_id }} -->
+                    <br>
+                    Likes: {{ calculatelikes(post.like) }}
+                    <form class="likeapost" action="/like-post" method="post">
+                        <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
+                        <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                    <!-- this routes to home currently, maybe change to redirect back to profile -->
+                    <form class="createreply" action="/create-reply" method="post">
+                        <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
+                        <input type="text" placeholder="Reply!" name="reply">
+                        <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
+                    </form>
+                    <!-- add replies here with show/hide display -->
+                </div>
+            {% endfor %}
+        </div>
 
+        <!-- only show user's replies -->
+        <div class="tab-pane fade" id="replies">
+            {% for reply in user.user_replies %}
+                <div class="replyblock">
+                    <!-- link to post here -->
+                    
+                    <!-- in reply, reply table reply_post = post from Post table -->
+                    <!-- then user from post table and then grabbed screenname -->
+                    In reply to: <a href="/users/{{ reply.reply_post.user.screenname }}">{{ reply.reply_post.user.screenname }}</a>
+                    <br>
+                    
+                    <div class="viewpost">
+                        <img class="user-pic" src="{{ reply.reply_user.profilepic }}">
+                        <a href="/users/{{ reply.reply_user.user_id }}">{{ reply.reply_user.screenname }}</a>
+
+                        <a href="/post/{{ reply.reply_post.post_id }}" class="viewpostge" title="View Post">
+                            <i class="fa-solid fa-up-right-from-square"></i>
+                        </a>
+                    </div>
+                    <br>
+                    body: {{ reply.body }}
+                    <br>
+                    time: {{ reply.timestamp }}
+                    <!-- reply_id {{ reply.reply_id }} -->
+                    <br>
+                    Likes: {{ calculatelikes(reply.like) }}
+                    <br>
+                    <!-- Like a reply form -->
+                    <form class="likeareply" action="/like-reply" method="post">
+                        <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
+                        <button type="submit" name="likebutton"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 {% endblock %}
