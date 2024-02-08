@@ -16,10 +16,40 @@ h1, h2, h3, h4, h5 {
 
 }
 
+
 .user-url:link {
-    color: rgb(185, 186, 248);
+    font-family: 'Patrick Hand', cursive;
+    font-size: large;
+    color: rgb(7, 9, 28);
     text-decoration: none;
 }
+
+.user-url:link:hover {
+    color: rgb(247, 214, 222);
+}
+
+.user-url:visited {
+    font-family: 'Patrick Hand', cursive;
+    font-size: large;
+    color: rgb(7, 9, 28);
+    text-decoration: none;
+}
+
+.user-url:visited:hover{
+    color: rgb(247, 214, 222);
+}
+.search-user-url {
+    font-family: 'Patrick Hand', cursive;
+    font-size: large;
+    color: white;
+    text-decoration: none;
+}
+
+.search-user-url:hover {
+    border-radius: 5px;
+    background-color: rgb(185 186, 248); 
+}
+
 .login-box {
     /* log in modal */
     background-color: rgb(185 186, 248);
@@ -70,13 +100,18 @@ h1, h2, h3, h4, h5 {
 }
 
 .post-btn {
-    /* border-color: rgb(185, 186, 248); */
+    border-radius: 5px;
     background-color: rgb(159, 195, 250);
+    float: right;
 }
 
-
+.post-btn:hover {
+    background-color: rgb(248, 179, 197);
+}
 .user-pic {
     /* user's profile pic thumbnail on post */
+    margin-top: 5px;
+    margin-left: 5px;
     border-radius: 25px;
     width: 50px;
     height: 50px;
@@ -90,24 +125,42 @@ h1, h2, h3, h4, h5 {
 }
 .postimages {
     /* images for posts */
-    border: 1px solid rgb(159, 195, 250);
+    border: 2px solid rgb(159, 195, 250);
+    margin: 10px;
     height: 400px;
     width: 400px;
 }
 
+.replyarea{
+    width: 50%;
+}
+
 .replyblock {
-    /* border: 2px black;
-    border-style: dotted; */
-    max-width: 300px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    
+    width: 100%;
 }
 
 .sidebar {
     background-color: rgb(7, 9, 28);
 }
 
-/* .search-bar {
-    background-color: rgb(185, 186, 248);
-} */
+.search-bar {
+   margin-top: 10px;
+}
+
+/* Remove default list styling */
+.results-list {
+    /* border: 1px solid rgb(159, 195, 250); */
+    /* color: rgb(246, 240, 220); */
+    /* background-color: rgb(185, 186, 248); */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
 
 /* sidebar's list items */
 .list-group-item {
@@ -125,22 +178,6 @@ h1, h2, h3, h4, h5 {
     font-family: 'Patrick Hand', cursive;
 }
 
-/* Remove default list styling */
-.results-list {
-    /* border: 1px solid rgb(159, 195, 250); */
-    color: (246, 240, 220);
-    background-color: rgb(185, 186, 248);
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-
-.headerpic {
-    /* user's header pic for their profile  */
-    width: 50px;
-    height: 250px;
-}
-
 .welcome-msg {
     margin-left: 25px;
     color: rgb(246, 240, 220);
@@ -149,6 +186,7 @@ h1, h2, h3, h4, h5 {
     /* width: 200;
     height: 500; */
     background-color: rgb(185, 186, 248);
+    padding-bottom: 15px;
 }
 
 .create-post-box {
@@ -160,19 +198,48 @@ h1, h2, h3, h4, h5 {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+
+}
+
+.createpostform{
+    width: 50% !important;
+}
+
+#createpost > textarea {
+    width: 100%;
+}
+.postblock {
+    border: 1px solid gray;
+    width: 50%;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 .postblock-header {
     /* line up user post, name and view post button */
     position: relative;
 }
 
+.likebtn {
+    border: none;
+    background: transparent;
+    color: rgb(7, 9, 28);
+}
+
+.likebtn:hover {
+    color: rgb(248, 179, 197);
+}
+
+
 .btn-viewpost {
     /* view post button */
+    color: rgb(185, 186, 248);;
     position: absolute; 
     top: 0;
     right: 0;
-    margin-right: 2px;
+    margin-top: 5px;
+    margin-right: 10px;
 }
+
 
 .timeline-box {
   display: flex;
@@ -180,6 +247,15 @@ h1, h2, h3, h4, h5 {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   margin-left: 25px;
+}
+
+
+.profile-tabs {
+    background-color: rgb(185, 186, 248);
+}
+
+.nav-link {
+    color: white;
 }

@@ -185,6 +185,7 @@ function fetchUser(evt) {
 
                 // create a link with href to user profile by using user_id
                 const link = document.createElement('a');
+                link.classList.add("search-user-url")
                 link.href = `/user/${user.user_id}`;
                 link.textContent = `${user.screenname}`;
 

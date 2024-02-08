@@ -34,7 +34,7 @@
     <!-- side bar -->
     <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-2 col-md-3 col-12 sidebar p-0">
+      <div class="col-lg-3 col-md-3 col-12 sidebar p-0">
         <!-- mx = margin -->
         <nav class="d-lg-block sidebar position-fixed">
           <div class="position-sticky w-100">
@@ -75,16 +75,32 @@
                 <i class="fa-solid fa-user-xmark me-3"></i>
                 <span class="sidebar-text">Logout</span>
               </a>
+              <!-- search bar -->
+              <div class="search-bar">
+              <form class="form-inline">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="search"
+                    id="search-input"
+                    placeholder="Search"
+                    aria-label="Search"
+                  />
+                </div>
+                </div>
+              </form>
+            
+            <ul class="results-list rounded" id="list"></ul>
             </div>
           </div>
         </nav>
       </div>
-
-      <div class="col-lg-8 col-md-6 col-12 p-0">
+      <!-- column for block content (feed, profile, specific post, and) -->
+      <div class="col-lg-9 col-md-6 col-12 p-0">
         {% block content %} 
         {% endblock %}
       </div>
-      <div class="col-lg-2 col-md-3 col-12 p-0 search-bar">
+      <!-- <div class="col-lg-2 col-md-3 col-12 p-0 search-bar">
         <form class="form-inline">
           <div class="input-group">
             <input
@@ -96,9 +112,9 @@
             />
           </div>
         </form>
-      <!-- search bar results container -->
+      
       <ul class="results-list rounded" id="list"></ul>
-    </div>
+    </div> -->
   </div>
 </div>
 

@@ -1,21 +1,21 @@
 {% extends 'feedprofilebase.html' %} {% block title %}Bunbook Home{% endblock %}
-{% block content %} 
+{% block content %}
 <div class="create-post-container">
   <div class="welcome-msg"><h3>welcome {{ session["screenname"] }}</h3></div>
   <div class="create-post-box">
     <br />
     <!-- Create a Post form -->
-    <form
+    <form 
+      class="createpostform"
       id="createpost"
       action="/create-post"
       method="post"
       enctype="multipart/form-data"
     >
       <!-- <input type="text" placeholder="Create A Post!" name="post" /> -->
-      <textarea class="formge" placeholder="Create a Post" name="post"></textarea>
+      <textarea class="formge rounded" placeholder="Create a Post" name="post"></textarea>
       <br>
       <input type="file" name="my-file" />
-      <br>
       <button class="post-btn" type="submit">Post <i class="fa-regular fa-envelope"></i></button>
     </form>
   </div>
@@ -24,13 +24,14 @@
 <br />
 
 <!-- <button id="load-new-posts-button">Load New Posts</button> -->
+
 <div class="timeline-box">
 {% for post in posts %}
 <!-- <div class="container"> -->
-<div class="postblock">
+<div class="postblock rounded">
   <div class="postblock-header">
     <img class="user-pic" src="{{ post.user.profilepic }}" />
-    <a class="user-url"href="/user/{{ post.user.user_id }}"> {{ post.user.screenname }}</a>
+    <a class="user-url"href="/user/{{ post.user.user_id }}" title="{{ post.user.screenname }}'s Profile"> {{ post.user.screenname }}</a>
 
     <!-- view specific post button -->
     <a href="/post/{{ post.post_id }}" class="btn-viewpost" title="View Post">
@@ -52,35 +53,37 @@
   <br />
 
   <!-- post.like will give a list, we want length of list -->
-  Likes: {{ calculatelikes(post.like) }}
+  <h5>Likes: {{ calculatelikes(post.like) }}</h5>
  
-  <!-- Like a post form -->
-  <form class="likeapost" action="/like-post" method="post">
-    <input
-      type="hidden"
-      id="likepostid"
-      name="likepostid"
-      value="{{ post.post_id }}"
-    />
-    <button type="submit" name="likebutton">
-      <i class="fa-regular fa-heart"></i>
-    </button>
-  </form>
+  <div class="post-reacts">
+    <!-- Like a post form -->
+    <form class="likeapost" action="/like-post" method="post">
+      <input
+        type="hidden"
+        id="likepostid"
+        name="likepostid"
+        value="{{ post.post_id }}"
+      />
+      <button class="likebtn" type="submit" name="likebutton">
+        <i class="fa-regular fa-heart"></i>
+      </button>
+    </form>
 
-  <!-- Create a Reply form -->
-  <form class="createreply" action="/create-reply" method="post">
-    <input
-      type="hidden"
-      id="postid"
-      name="post_id"
-      value="{{ post.post_id }}"
-    />
-    <input type="text" placeholder="Reply!" name="reply" />
-    <button type="submit"><i class="fa-regular fa-comment-dots"></i></button>
-  </form>
-  
+    <!-- Create a Reply form -->
+    <form class="createreply" action="/create-reply" method="post">
+      <input
+        type="hidden"
+        id="postid"
+        name="post_id"
+        value="{{ post.post_id }}"
+      />
+      <textarea class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+      <button class="likebtn" type="submit"><i class="fa-regular fa-comment-dots"></i></button>
+    </form>
+    </div>
+
   <!-- Show replies button-->
-  <button class="showreplies" data-postid="{{ post.post_id }}">
+  <button class="showreplies likebtn" data-postid="{{ post.post_id }}">
     Show Replies
   </button>
 
@@ -92,11 +95,12 @@
   >
     {% if post.reply %} {% for reply in post.reply %}
     <img class="user-pic" src="{{ reply.reply_user.profilepic }}" />
-    <a href="/user/{{ reply.reply_user.user_id }}"
+    <a class="user-url" href="/user/{{ reply.reply_user.user_id }}"
       >{{ reply.reply_user.screenname }}</a
     >
     <br />
-    body: {{ reply.body }}
+    <!-- body  -->
+    {{ reply.body }}
     <br />
     time: {{ reply.timestamp }}
     <!-- reply_id {{ reply.reply_id }} -->
@@ -116,7 +120,7 @@
         name="likereplyid"
         value="{{ reply.reply_id}}"
       />
-      <button type="submit" name="likebutton">
+      <button class="likebtn" type="submit" name="likebutton">
         <i class="fa-regular fa-heart"></i>
       </button>
     </form>
