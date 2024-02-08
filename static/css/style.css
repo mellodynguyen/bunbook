@@ -79,6 +79,12 @@ h1, h2, h3, h4, h5 {
     justify-content: center;
 }
 
+.edit-profile-btn {
+    border-color: rgb(185, 186, 248);
+    background-color: rgb(247, 214, 222);
+    color: white;
+    width: 25%;
+}
 .btn-bunbook {
     /* modal buttons */
     /* periwinkle: 185, 186, 248 */
@@ -254,6 +260,9 @@ h1, h2, h3, h4, h5 {
 
 .profile-tabs {
     background-color: rgb(185, 186, 248);
+    justify-content: space-evenly;
+    font-size: x-large;
+    margin-bottom: 10px;
 }
 
 .nav-link {

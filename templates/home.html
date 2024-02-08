@@ -31,7 +31,7 @@
 <div class="postblock rounded">
   <div class="postblock-header">
     <img class="user-pic" src="{{ post.user.profilepic }}" />
-    <a class="user-url"href="/user/{{ post.user.user_id }}" title="{{ post.user.screenname }}'s Profile"> {{ post.user.screenname }}</a>
+    <a class="user-url" href="/user/{{ post.user.user_id }}" title="{{ post.user.screenname }}'s Profile"> {{ post.user.screenname }}</a>
 
     <!-- view specific post button -->
     <a href="/post/{{ post.post_id }}" class="btn-viewpost" title="View Post">
@@ -105,7 +105,7 @@
     time: {{ reply.timestamp }}
     <!-- reply_id {{ reply.reply_id }} -->
     <br />
-    Likes: {{ calculatelikes(reply.like) }}
+    <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
     <br />
     <!-- Like a reply form -->
     <form

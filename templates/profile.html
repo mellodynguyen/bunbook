@@ -3,7 +3,6 @@
 <!-- change title to display user info/screen name  -->
 {% block title %} Bunbook {{ user.screenname }}'s Profile {% endblock %} {%
 block content %}
-<div class="col-lg-6 col-md-9 col-12">
   <style>
     .profilephoto {
       left: 10rem;
@@ -18,7 +17,7 @@ block content %}
 
   <!-- User Profile container -->
   <div class="usercontainer">
-        <img src="{{ user.headerpic }}" />
+    <img src="{{ user.headerpic }}" />
     <br />
     <form
       id="headeruploader"
@@ -32,7 +31,7 @@ block content %}
       <input type="submit" />
     </form>
 
-    {{ user.screenname }}
+    <h3>{{ user.screenname }}</h3>
     <!-- profile photo container -->
     <div class="profilephoto mt-2 mb-2"></div>
     <br />
@@ -44,7 +43,7 @@ block content %}
     <!-- edit profile button -->
     <button
       type="button"
-      class="btn btn-bunbook"
+      class="btn edit-profile-btn"
       data-bs-toggle="modal"
       data-bs-target="#edit-user-content"
     >
@@ -120,7 +119,7 @@ block content %}
     </div>
 
     <!-- profile nav tabs (posts/replies/likes) -->
-    <ul class="nav justify-content-center rounded profile-tabs" id="profile-tabs" data-bs-tabs="true">
+    <ul class="nav rounded profile-tabs" id="profile-tabs" data-bs-tabs="true">
       <!-- posts -->
       <li class="nav-item">
         <a
@@ -152,10 +151,18 @@ block content %}
   <!-- only show user's posts -->
   <div class="tab-content">
     <div class="tab-pane fade show active" id="posts">
+      <div class="timeline-box">
       {% for post in user.user_posts %}
-      <div class="postblock timeline-box">
+      <div class="postblock rounded">
+        <div class="postblock-header">
+
         <img class="user-pic" src="{{ post.user.profilepic }}" />
         <a class="user-url" href="/user/{{ post.user.user_id}}">{{ post.user.screenname }}</a>
+        
+        <a href="/post/{{ post.post_id }}" class="btn-viewpost" title="View Post">
+          <i class="fa-solid fa-up-right-from-square"></i>
+        </a>
+      </div>
         <br />
         body: {{ post.body }} {% if post.images %}
         <br />
@@ -166,7 +173,9 @@ block content %}
         timestamp: {{ post.timestamp }}
         <!-- Post_id: {{ post.post_id }} -->
         <br />
-        Likes: {{ calculatelikes(post.like) }}
+        <h5>Likes: {{ calculatelikes(post.like) }}</h5>
+        
+        <div class="post-reacts">
         <form class="likeapost" action="/like-post" method="post">
           <input
             type="hidden"
@@ -174,7 +183,7 @@ block content %}
             name="likepostid"
             value="{{ post.post_id }}"
           />
-          <button type="submit" name="likebutton">
+          <button class="likebtn" type="submit" name="likebutton">
             <i class="fa-regular fa-heart"></i>
           </button>
         </form>
@@ -186,20 +195,64 @@ block content %}
             name="post_id"
             value="{{ post.post_id }}"
           />
-          <input type="text" placeholder="Reply!" name="reply" />
-          <button type="submit">
+          <textarea class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+          <button class="likebtn" type="submit">
             <i class="fa-regular fa-comment-dots"></i>
           </button>
         </form>
-        <!-- add replies here with show/hide display -->
       </div>
+        <!-- add replies here with show/hide display -->
+        <button class="showreplies likebtn" data-postid="{{ post.post_id }}">
+          Show Replies
+        </button>
+
+        <div
+        class="replyblock"
+        id="replyblock-{{ post.post_id }}"
+        style="display: none"
+      >
+        {% if post.reply %} {% for reply in post.reply %}
+        <img class="user-pic" src="{{ reply.reply_user.profilepic }}" />
+        <a class="user-url" href="/user/{{ reply.reply_user.user_id }}"
+          >{{ reply.reply_user.screenname }}</a
+        >
+        <br />
+        <!-- body  -->
+        {{ reply.body }}
+        <br />
+        time: {{ reply.timestamp }}
+        <!-- reply_id {{ reply.reply_id }} -->
+        <br />
+        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
+        <br />
+        <!-- Like a reply form -->
+        <form
+          class="likeareply"
+          action="/like-reply"
+          method="post"
+          data-replyid="{{ reply.reply_id }}"
+        >
+          <input
+            type="hidden"
+            id="likereplyid"
+            name="likereplyid"
+            value="{{ reply.reply_id}}"
+          />
+          <button class="likebtn" type="submit" name="likebutton">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </form>
+        {% endfor %} {% endif %}
+      </div>
+      </div> 
       {% endfor %}
+    </div>
     </div>
 
     <!-- only show user's replies -->
     <div class="tab-pane fade" id="replies">
       {% for reply in user.user_replies %}
-      <div class="replyblock timeline-box">
+      <div class="replyblock">
         <!-- link to post here -->
 
         <!-- in reply, reply table reply_post = post from Post table -->
@@ -230,7 +283,7 @@ block content %}
         time: {{ reply.timestamp }}
         <!-- reply_id {{ reply.reply_id }} -->
         <br />
-        Likes: {{ calculatelikes(reply.like) }}
+        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
         <br />
         <!-- Like a reply form -->
         <form class="likeareply" action="/like-reply" method="post">
@@ -240,7 +293,7 @@ block content %}
             name="likereplyid"
             value="{{ reply.reply_id}}"
           />
-          <button type="submit" name="likebutton">
+          <button class="likebtn" type="submit" name="likebutton">
             <i class="fa-regular fa-heart"></i>
           </button>
         </form>
@@ -248,5 +301,5 @@ block content %}
       {% endfor %}
     </div>
   </div>
-</div>
+
 {% endblock %}
