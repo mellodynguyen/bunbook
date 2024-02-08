@@ -321,3 +321,10 @@ margin-bottom: 5%;
     margin-left: 1%;
     padding-bottom: 1%;
 }
+
+.specific-post-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

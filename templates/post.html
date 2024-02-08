@@ -4,56 +4,77 @@
 {% block title %}Bunbook {{ post.user.screenname }} Post: {{post_id}}{% endblock %}
 
 {% block content %}
-
-<div class="postblock">
-    {{ post.user.screenname }}
-    <br>
-    {{ post.body }}
-    {% if post.images %}
-    <br>
-    <img class="postimages" src="{{ post.images[0].image_link }}">
-    <br>
-    {% endif %}
-    <br>
+<div class="create-post-container">
+    <div class="welcome-msg"><h1>{{ post.user.screenname }}'s Post</h1></div>
+</div>
+<div class="specific-post-box">
+    <div class="postblock rounded">
+        <div class="postblock-header">
+            <img class="user-pic" src="{{ post.user.profilepic }}" />
+            <a class="user-url" href="/user/{{ post.user.user_id }}" 
+            title="{{ post.user.screenname }}'s Profile"> {{ post.user.screenname }}</a>
+        </div> 
+    <div class="postbody">
+        {{ post.body }}
+        {% if post.images %}
+        <br>
+        <img class="postimages" src="{{ post.images[0].image_link }}">
+        <br>
+        {% endif %}
+    </div>
+    <div class="post-reacts">
     timestamp: {{ post.timestamp }}
     <br>
-    Likes: {{ calculatelikes(post.like) }}
+    <h5>Likes: {{ calculatelikes(post.like) }}</h5>
     <form class="likeapost" action="/like-post" method="post">
         <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
-        <button type="submit" name="likebutton">Like</button>
+        <button class="likebtn" type="submit" name="likebutton">
+            <i class="fa-regular fa-heart"></i>
+        </button>
     </form>
     <form class="createreply" action="/create-reply" method="post">
         <input type="hidden" id="postid" name="post_id" value="{{ post.post_id }}">
-        <input type="text" placeholder="Reply!" name="reply">
-        <input type="submit">
-      </form>
-</div>
-<!-- Do not need the "if reply" because jinja will not loop if list is empty -->
-{% if replies %}
+        <textarea class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+        <button class="likebtn" type="submit"><i class="fa-regular fa-comment-dots"></i></button>
+      </form> 
+    </div>
+    {% if replies %}
+    <h4>Replies:</h4>
     {% for reply in replies %}
     <div class="replyblock">
-        <!-- link to post here -->
-        
+        <div class="postblock-header">
+        <h5>In reply to:         <a class="user-url" href="/user/{{ reply.reply_post.user.user_id }}"
+            >{{ reply.reply_post.user.screenname }}</a
+          ></h5>
+
         <!-- in reply, reply table reply_post = post from Post table -->
         <!-- then user from post table and then grabbed screenname -->
-        In reply to: {{ reply.reply_post.user.screenname }}
+        <img class="user-pic" src="{{ reply.reply_user.profilepic }}" />
+        <a class="user-url" href="/user/{{ reply.reply_user.user_id }}"
+          >{{ reply.reply_user.screenname }}</a
+        >
+        </div>
         <br>
-        username: {{ reply.reply_user.screenname }}
-        <br>
-        body: {{ reply.body }}
-        <br>
+        <div class="postbody">
+        {{ reply.body }}
+        </div>
+        <div class="post-reacts">
         time: {{ reply.timestamp }}
-        reply_id {{ reply.reply_id }}
-        <br>
-        Likes: {{ calculatelikes(reply.like) }}
-        <br>
-        <!-- Like a reply form -->
+        <!-- reply_id {{ reply.reply_id }} -->
+        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
         <form class="likeareply" action="/like-reply" method="post">
             <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
-            <button type="submit" name="likebutton">Like</button>
+            <button class="likebtn" type="submit" name="likebutton">
+                <i class="fa-regular fa-heart"></i>
+            </button>
         </form>
+        </div>
+        <!-- Like a reply form -->
+
     </div>
     {% endfor %}
 {% endif %}
+</div>
+</div>
 
 {% endblock %}
