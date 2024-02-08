@@ -38,7 +38,7 @@
       <i class="fa-solid fa-up-right-from-square"></i>
     </a>
   </div>
-
+  <div class="postbody">
   <br />
   {{ post.body }}
   <br />
@@ -48,14 +48,13 @@
   <img class="postimages rounded" src="{{ post.images[0].image_link }}" />
   {% endif %}
 
-  <br />
+</div>
+<div class="post-reacts">
   time: {{ post.timestamp }}
-  <br />
 
   <!-- post.like will give a list, we want length of list -->
   <h5>Likes: {{ calculatelikes(post.like) }}</h5>
- 
-  <div class="post-reacts">
+  <!-- <div class="post-reacts"> -->
     <!-- Like a post form -->
     <form class="likeapost" action="/like-post" method="post">
       <input
@@ -86,7 +85,7 @@
   <button class="showreplies likebtn" data-postid="{{ post.post_id }}">
     Show Replies
   </button>
-
+  
   <!-- Show replies to post if any -->
   <div
     class="replyblock"
@@ -106,7 +105,6 @@
     <!-- reply_id {{ reply.reply_id }} -->
     <br />
     <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
-    <br />
     <!-- Like a reply form -->
     <form
       class="likeareply"

@@ -46,20 +46,33 @@ h1, h2, h3, h4, h5 {
 }
 
 .search-user-url:hover {
-    border-radius: 5px;
-    background-color: rgb(185 186, 248); 
+    /* border-radius: 5px;
+    background-color: rgb(185 186, 248);  */
+    color: rgb(185 186, 248);
 }
 
 .login-box {
     /* log in modal */
-    background-color: rgb(185 186, 248);
-    color: white;
+    background-color: rgb(248 179, 197);
+    color: rgb(62, 66, 118);
     /* border: 2px solid rgb(247, 214, 222); */
     max-width: 600px;
     padding-right: 48px;
     padding-left: 48px;
 }
 
+.bunbook-welcome{
+    padding-bottom: 5%;
+}
+.centered-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0 auto;
+
+}
 /* modals */
 .modal-content {
     background-color: rgb(185, 186, 248);
@@ -88,8 +101,8 @@ h1, h2, h3, h4, h5 {
 .btn-bunbook {
     /* modal buttons */
     /* periwinkle: 185, 186, 248 */
-    border-color: rgb(185, 186, 248);
-    background-color: rgb(247, 214, 222);
+    /* border-color: rgb(185, 186, 248); */
+    background-color: rgb(185, 186, 248);
     color: white;
     width: 100%;
 }
@@ -97,7 +110,7 @@ h1, h2, h3, h4, h5 {
 .btn-bunbook:hover {
     /* button on hover */
     border-color: rgb(185, 186, 248);
-    background-color: rgb(248, 179, 197);
+    background-color: rgb(159, 195, 250);
 }
 
 .btn-close {
@@ -106,6 +119,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .post-btn {
+    font-family: 'Patrick Hand', cursive;
     border-radius: 5px;
     background-color: rgb(159, 195, 250);
     float: right;
@@ -129,6 +143,11 @@ h1, h2, h3, h4, h5 {
     width: 25px;
     height: 25px;
 }
+
+.postbody {
+margin-left: 2%;
+margin-bottom: 5%;
+}
 .postimages {
     /* images for posts */
     border: 2px solid rgb(159, 195, 250);
@@ -137,8 +156,12 @@ h1, h2, h3, h4, h5 {
     width: 400px;
 }
 
+.post-reacts {
+    margin-left: 2%;
+}
 .replyarea{
     width: 50%;
+    margin-left: 2%;
 }
 
 .replyblock {
@@ -149,10 +172,33 @@ h1, h2, h3, h4, h5 {
     width: 100%;
 }
 
+/* Hide text in the sidebar on screens smaller than 576px */
+@media (max-width: 992px) {
+    .sidebar-text {
+        display: none;
+    }
+}
 .sidebar {
     background-color: rgb(7, 9, 28);
 }
 
+.bunbook-icon {
+    width: 10%;
+    height: 10%;
+}
+
+/* .bunbook-logo {
+    position: fixed;
+    top: 5px;
+
+} */
+
+.bunbook-mascot {
+    position: fixed;
+    left: 2%;
+    bottom: 5%;
+    width: 10%;
+}
 .search-bar {
    margin-top: 10px;
 }
@@ -215,7 +261,7 @@ h1, h2, h3, h4, h5 {
     width: 100%;
 }
 .postblock {
-    border: 1px solid gray;
+    border: 1px solid rgb(185, 186, 248);
     width: 50%;
     padding-bottom: 15px;
     margin-bottom: 15px;
@@ -250,7 +296,7 @@ h1, h2, h3, h4, h5 {
 .timeline-box {
   display: flex;
  
-  flex-direction: column;
+  flex-direction: column-reverse;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;

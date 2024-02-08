@@ -258,7 +258,7 @@ block content %}
         <!-- in reply, reply table reply_post = post from Post table -->
         <!-- then user from post table and then grabbed screenname -->
         In reply to:
-        <a class="user-url" href="/users/{{ reply.reply_post.user.screenname }}"
+        <a class="user-url" href="/user/{{ reply.reply_post.user.user_id }}"
           >{{ reply.reply_post.user.screenname }}</a
         >
         <br />

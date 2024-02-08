@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="../static/images/Bun-icon-03.png">
 
     <!-- Font Awesome CSS (icons) -->
     <link
@@ -35,17 +36,18 @@
     <div class="container-fluid">
     <div class="row">
       <div class="col-lg-3 col-md-3 col-12 sidebar p-0">
-        <!-- mx = margin -->
+        <!-- <img class="bunbook-logo" src="../static/images/Bun-small-logo-01.png"> -->
         <nav class="d-lg-block sidebar position-fixed">
           <div class="position-sticky w-100">
             <div class="list-group list-group-flush mx-3 mt-4">
+              <img class="bunbook-logo" src="../static/images/Bun-small-logo-01.png">
               <a
                 href="/home"
                 class="list-group-item list-group-item-action py-2 ripple"
                 aria-current="true"
               >
-                <i class="fas fa-tachometer-alt fa-fw me-3"> </i
-                ><span class="sidebar-text">Bunbook</span>
+                <img class="bunbook-icon" src="../static/images/Bun-icon-04.png">
+                <span class="sidebar-text">Bunbook</span>
               </a>
               <a
                 href="/home"
@@ -94,27 +96,13 @@
             </div>
           </div>
         </nav>
-      </div>
+        <img class="bunbook-mascot" src="../static/images/BunWave.png">
+      </div> 
       <!-- column for block content (feed, profile, specific post, and) -->
       <div class="col-lg-9 col-md-6 col-12 p-0">
         {% block content %} 
         {% endblock %}
       </div>
-      <!-- <div class="col-lg-2 col-md-3 col-12 p-0 search-bar">
-        <form class="form-inline">
-          <div class="input-group">
-            <input
-              class="form-control"
-              type="search"
-              id="search-input"
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </div>
-        </form>
-      
-      <ul class="results-list rounded" id="list"></ul>
-    </div> -->
   </div>
 </div>
 
