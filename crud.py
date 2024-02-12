@@ -62,13 +62,13 @@ def create_user_header(user_id, image_link):
     
     return current_user
 
-def create_user_info(user_id, screenname, bio, pronouns, location, birthday):
+def create_user_info(user_id, bio, pronouns, location):
     current_user = get_user_by_id(user_id)
-    current_user.screenname = screenname
+    # current_user.screenname = screenname
     current_user.bio = bio
     current_user.pronouns = pronouns
     current_user.location = location
-    current_user.birthday = birthday
+    # current_user.birthday = birthday
 
     return current_user
 def create_like_for_reply(user_id, reply_id):

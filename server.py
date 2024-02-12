@@ -211,14 +211,14 @@ def profile_settings():
 
     user_id = session['user_id']
 
-    screenname = request.form.get('screenname')
+    # screenname = request.form.get('screenname')
     bio = request.form.get('bio')
     pronouns = request.form.get('pronouns')
     location = request.form.get('location')
-    birthday = request.form.get('birthday')
+    # birthday = request.form.get('birthday')
 
-    user_with_info = crud.create_user_info(user_id, screenname, bio, pronouns, 
-                                          location, birthday)
+    user_with_info = crud.create_user_info(user_id, bio, pronouns, 
+                                          location)
 
     db.session.add(user_with_info)
     db.session.commit()

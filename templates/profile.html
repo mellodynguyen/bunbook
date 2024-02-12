@@ -127,14 +127,14 @@ block content %}
             </form>
             <form id="userbio" action="/profile/settings" method="post">
               <!-- screen/displayname -->
-              <label for="user-screenname">Display Name</label>
-              <br />
-              <input type="text" name="screenname" />
+              <!-- <label for="user-screenname">Display Name</label>
+              <br /> -->
+              <!-- <input type="text" name="screenname" /> -->
               <br />
               <!-- pronouns -->
               <label for="user-pronouns">Pronouns</label>
               <br />
-              <input type="text" name="pronouns" />
+              <input type="text" name="pronouns" value="{{ user.pronouns }}"/>
               <br />
               <!-- bio -->
               <label for="user-bio">Bio</label>
@@ -144,12 +144,12 @@ block content %}
               <!-- Location -->
               <label for="user-location">Location</label>
               <br />
-              <input type="text" name="location" />
+              <input type="text" name="location" value="{{ user.location }}" />
               <br />
               <!-- Birthday -->
-              <label for="Birthday">Birthday</label>
+              <!-- <label for="Birthday">Birthday</label>
               <br />
-              <input type="date" id="birthday" name="birthday" />
+              <input type="date" id="birthday" name="birthday" /> -->
               <input type="submit" />
             </form>
           </div>
