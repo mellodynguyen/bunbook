@@ -181,9 +181,13 @@ block content %}
         >
       </li>
       <!-- likes -->
-      <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-            </li> -->
+      <li class="nav-item">
+            <a class="nav-link" 
+            id="likes-tab"
+            href="#likes"
+            data-bs-toggle="tab"
+            >Likes</a>
+            </li>
     </ul>
   </div> 
 
@@ -342,6 +346,64 @@ block content %}
       {% endfor %}
     </div>
     </div>
+    <div class="tab-pane fade" id="likes">
+      <div class="timeline-box">
+      {% for post in liked_posts %}
+      <div class="postblock rounded">
+        <div class="postblock-header">
+
+          <img class="user-pic" src="{{ post.user.profilepic }}" />
+          <a class="user-url" href="/user/{{ post.user.user_id}}">{{ post.user.screenname }}</a>
+          
+          <a href="/post/{{ post.post_id }}" class="btn-viewpost" title="View Post">
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </a>
+        </div>
+          <br />
+          {{ post.body }} 
+          {% if post.images %}
+          <br />
+          <img class="postimages" src="{{ post.images[0].image_link }}" />
+          <br />
+          {% endif %}
+          <br />
+          time: {{ post.timestamp }}
+          <!-- Post_id: {{ post.post_id }} -->
+          <br />
+          <h5>Likes: {{ calculatelikes(post.like) }}</h5>
+          
+          <div class="post-reacts">
+          <form class="likeapost" action="/like-post" method="post">
+            <input
+              type="hidden"
+              id="likepostid"
+              name="likepostid"
+              value="{{ post.post_id }}"
+            />
+            <button class="likebtn" type="submit" name="likebutton">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+          </form>
+          <!-- this routes to home currently, maybe change to redirect back to profile -->
+          <form class="createreply" action="/create-reply" method="post">
+            <input
+              type="hidden"
+              id="postid"
+              name="post_id"
+              value="{{ post.post_id }}"
+            />
+            <textarea class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+            <button class="likebtn" type="submit">
+              <i class="fa-regular fa-comment-dots"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    </div>
   </div>
+
+
 
 {% endblock %}

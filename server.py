@@ -162,9 +162,10 @@ def profile():
     # profile page should show the user's posts and replies
     user = crud.get_user_by_id(session['user_id'])
     # should also show their likes
-   
+    liked_posts = Post.query.join(PostLike).filter(PostLike.user_id == user.user_id).all()
     
-    return render_template('profile.html', user=user, calculatelikes=calculatelikes)
+    return render_template('profile.html', user=user, 
+                           liked_posts=liked_posts, calculatelikes=calculatelikes)
 
 
 @app.route('/profile-pic', methods=['POST'])
@@ -294,8 +295,11 @@ def show_other_user_profile(user_id):
 
     replies = Reply.query.filter(user_id == user_id).all()
 
+    liked_posts = Post.query.join(PostLike).filter(PostLike.user_id == user.user_id).all()
+
     return render_template('other_user_profile.html', user=user, posts=posts,
-                           replies=replies, calculatelikes=calculatelikes)
+                           replies=replies, liked_posts=liked_posts,
+                           calculatelikes=calculatelikes)
 
 
 
