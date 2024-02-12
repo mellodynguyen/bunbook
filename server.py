@@ -416,7 +416,12 @@ def like_a_reply():
 
     return redirect('/home')
 
+# meet the artist page / credits page
 
+@app.route('/easter-egg')
+def show_how_cool_monica_is():
+    
+    return render_template('monica.html')
 
 # helper function to upload image to cloudinary
 def upload_to_cloudinary(media_file):

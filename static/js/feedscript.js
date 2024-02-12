@@ -213,3 +213,11 @@ function navigateToUserProfile(userId) {
     window.location.href = `/user/${userId}`;
 };
 
+const bunbookMascot = document.querySelector('.bunbook-mascot')
+
+function changeMascot() {
+    bunbookMascot.getAttribute('src');
+    bunbookMascot.setAttribute('src', '../static/images/BunKnife.png');
+};
+
+bunbookMascot.addEventListener('mouseover', changeMascot);
