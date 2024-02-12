@@ -5,9 +5,8 @@
 block content %}
   <style>
     .profilephoto {
-      left: 10rem;
-      width: 150px;
-      height: 150px;
+      width: 250px;
+      height: 250px;
       background-image: url("{{ user.profilepic }}");
       background-size: cover;
       background-position: center;
@@ -15,10 +14,44 @@ block content %}
     }
   </style>
 
+<div class="headercontainer">
+  <img class="userheader" src="{{ user.headerpic }}" />
+</div>
   <!-- User Profile container -->
   <div class="usercontainer">
-    <img src="{{ user.headerpic }}" />
-    <br />
+    <!-- change header button -->
+    <button
+    type="button"
+    class="btn header-btn"
+    data-bs-toggle="modal"
+    data-bs-target="#change-header"
+  >
+  <i class="fa-solid fa-camera"></i>
+  </button>
+    <!-- Modal for changing header -->
+    <div
+    class="modal fade"
+    id="change-header"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"></h5>
+          <button
+            type="button"
+            class="close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
     <form
       id="headeruploader"
       action="/profile-header"
@@ -30,16 +63,22 @@ block content %}
       <input type="file" name="headerpic" />
       <input type="submit" />
     </form>
-
-    <h3>{{ user.screenname }}</h3>
+  </div>
+</div>
+</div>
+</div> 
+    <h2>{{ user.screenname }}</h2>
     <!-- profile photo container -->
     <div class="profilephoto mt-2 mb-2"></div>
     <br />
 
-    Bio: {{ user.pronouns }} {{ user.bio }}
+    <h5>{{ user.pronouns }}
+    <br>
+    {{ user.bio }}
     <br />
     {{ user.birthday }} {{ user.location }}
     <br />
+    </h5>
     <!-- edit profile button -->
     <button
       type="button"
@@ -146,7 +185,7 @@ block content %}
             <a class="nav-link" href="#">Link</a>
             </li> -->
     </ul>
-  </div>
+  </div> 
 
   <!-- only show user's posts -->
   <div class="tab-content">
@@ -164,13 +203,14 @@ block content %}
         </a>
       </div>
         <br />
-        body: {{ post.body }} {% if post.images %}
+        {{ post.body }} 
+        {% if post.images %}
         <br />
         <img class="postimages" src="{{ post.images[0].image_link }}" />
         <br />
         {% endif %}
         <br />
-        timestamp: {{ post.timestamp }}
+        time: {{ post.timestamp }}
         <!-- Post_id: {{ post.post_id }} -->
         <br />
         <h5>Likes: {{ calculatelikes(post.like) }}</h5>
@@ -246,13 +286,14 @@ block content %}
       </div>
       </div> 
       {% endfor %}
-    </div>
+    </div> 
     </div>
 
     <!-- only show user's replies -->
     <div class="tab-pane fade" id="replies">
+      <div class="timeline-box">
       {% for reply in user.user_replies %}
-      <div class="replyblock">
+      <div class="profile-replyblock">
         <!-- link to post here -->
 
         <!-- in reply, reply table reply_post = post from Post table -->
@@ -278,7 +319,7 @@ block content %}
           </a>
         </div>
         <br />
-        body: {{ reply.body }}
+        {{ reply.body }}
         <br />
         time: {{ reply.timestamp }}
         <!-- reply_id {{ reply.reply_id }} -->
@@ -299,6 +340,7 @@ block content %}
         </form>
       </div>
       {% endfor %}
+    </div>
     </div>
   </div>
 

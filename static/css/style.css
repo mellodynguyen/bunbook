@@ -92,11 +92,19 @@ h1, h2, h3, h4, h5 {
     justify-content: center;
 }
 
+.header-btn{
+    border-color: rgb(185, 186, 248);
+    background-color: rgb(247, 214, 222);
+    margin-left: -96%;
+    margin-bottom: -3%;
+}
 .edit-profile-btn {
     border-color: rgb(185, 186, 248);
     background-color: rgb(247, 214, 222);
     color: white;
-    width: 25%;
+    width: 10%;
+    margin-bottom: 1%;
+    padding-bottom: 1%;
 }
 .btn-bunbook {
     /* modal buttons */
@@ -170,6 +178,12 @@ margin-bottom: 5%;
     margin-bottom: 25px;
     
     width: 100%;
+}
+
+.profile-replyblock {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 /* Hide text in the sidebar on screens smaller than 576px */
@@ -303,7 +317,16 @@ margin-bottom: 5%;
   margin-left: 25px;
 }
 
-
+.userheader {
+    width: 100%;
+    height: auto;
+}
+.usercontainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
 .profile-tabs {
     background-color: rgb(185, 186, 248);
     justify-content: space-evenly;
