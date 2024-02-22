@@ -113,21 +113,54 @@ setInterval(() => {
 
 
 // for liking a post 
-// document.querySelectorAll('.likeapost').addEventListener('submit', (evt) => {
-//     evt.preventDefault();
+// create a variable to store all the selected elements
+//  this creates a list of HTML elements
+const likebuttons = document.querySelectorAll(".likeapost");
 
-//     evt.target.document.querySelector('#likepostid').value
+// throw it [the elements] into a for loop
+for (const likebutton of likebuttons) {
+    // for each button we want to add an event listener
+    likebutton.addEventListener('submit', (evt) => {
+        // we need the event target so we need (evt) and need to cancel default
+        evt.preventDefault();
+        // we want to grab the value from the input
+        // console.log(document.querySelector('#likepostid')) 
+        // selecting by #likepostid is wrong because piles of input have same ID
 
-// });
+        // console.log(evt.target)
+        // this will get the event object (form [which contains value])
+        const like_post_id = evt.target.getAttribute('data-postid');
+        // console.log(like_post_id)
+
+        // take value that we grabbed, tuck into object so we can tuck it into
+        const like_object = {
+            post_id: like_post_id
+        }
+        // fetch request, this will be a POST request [post because we are sending info]
+        fetch('/like-post', {
+            method: 'POST',
+            body: JSON.stringify(like_object),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                // console.log(responseJson)
+                // select finish line and update what's inside of it
+                const likecounter = "#likecounter" + responseJson.post_id 
+                console.log(likecounter);
+                // this should say {num_likes: 3, post_id: 21}
+                console.log(responseJson);
+                // setting the HTML displaying number of likes to the new count of likes
+                document.querySelector(likecounter).innerHTML = `Likes: ${responseJson.num_likes}`
+            })
+    })
+}
 
 
 // for liking a reply
-// document.querySelectorAll('.likeareply').addEventListener('submit', (evt) => {
-//     evt.preventDefault();
 
-//     evt.target.document.querySelector('#likereplyid').value
-
-// });
 
 // show/hide reply forms
 // getElementsByClassName will get every element and the func will need

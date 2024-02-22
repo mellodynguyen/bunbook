@@ -376,33 +376,32 @@ def like_a_post():
     # like_id = request.form.get('likebutton')
 
     user_id = session['user_id']
-    post_id = int(request.form.get('likepostid'))
-    # print(post_id)
-    # print(type(post_id))
+    post_id = int(request.json.get('post_id'))
+
+
     postlike = crud.create_like_for_post(user_id, post_id)
     db.session.add(postlike)
     db.session.commit()
 
-
     notifier_id = crud.get_user_by_post_id(post_id).user_id
-    # print(notifier_id)
-    # print(type(notifier_id))
+
     type_of_thing = "like"
     timestamp = datetime.datetime.now()
 
     notification = crud.create_notification(user_id, notifier_id, post_id,
                                             type_of_thing, timestamp)
     
-    # print("Before Commit")
-    # try:
+
     db.session.add(notification)
     db.session.commit()
-    print("After commit")
-    # except Exception as e:
-        # db.session.rollback()
-        # print(f"Error commit to the database: {e}")
 
-    return redirect('/home')
+    # we need to know what number to put on the HTML (to replace)
+        # need to know how many likes the post already had 
+    calculated_likes = calculatelikes(Post.query.get(post_id).like)
+
+    # in jsonify, send post_id and num of likes back to front end
+    return jsonify({'post_id': post_id,
+                    'num_likes': calculated_likes})
 
 
 @app.route('/like-reply', methods=['POST'])
