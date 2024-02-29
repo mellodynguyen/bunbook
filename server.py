@@ -410,14 +410,17 @@ def like_a_reply():
 
     user_id = session['user_id']
 
-    reply_id = int(request.form.get('likereplyid'))
+    reply_id = int(request.json.get('reply_id'))
+    
 
     replylike = crud.create_like_for_reply(user_id, reply_id)
 
     db.session.add(replylike)
     db.session.commit()
 
-    return redirect('/home')
+    calculated_replylikes = calculatelikes(Reply.query.get(reply_id).like)
+
+    return jsonify({'reply_id': reply_id, 'replynum_likes': calculated_replylikes})
 
 # meet the artist page / credits page
 

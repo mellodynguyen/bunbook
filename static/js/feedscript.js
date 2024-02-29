@@ -149,9 +149,9 @@ for (const likebutton of likebuttons) {
                 // console.log(responseJson)
                 // select finish line and update what's inside of it
                 const likecounter = "#likecounter" + responseJson.post_id 
-                console.log(likecounter);
-                // this should say {num_likes: 3, post_id: 21}
-                console.log(responseJson);
+                // console.log(likecounter);
+                // // this should say {num_likes: 3, post_id: 21}
+                // console.log(responseJson);
                 // setting the HTML displaying number of likes to the new count of likes
                 document.querySelector(likecounter).innerHTML = `Likes: ${responseJson.num_likes}`
             })
@@ -160,7 +160,36 @@ for (const likebutton of likebuttons) {
 
 
 // for liking a reply
+const replylikebuttons = document.querySelectorAll(".likeareply")
 
+for (const replylikebutton of replylikebuttons) {
+    replylikebutton.addEventListener('submit', (evt) => {
+        evt.preventDefault();
+
+        const like_reply_id = evt.target.getAttribute('data-replyid');
+        console.log(like_reply_id)
+
+        const reply_like_object = {
+            reply_id: like_reply_id
+        }
+        
+        fetch('/like-reply', {
+            method: 'POST',
+            body: JSON.stringify(reply_like_object),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                // console.log(responseJson)
+                const replylikecounter = "#replylikecounter" + responseJson.reply_id
+                // console.log(replylikecounter)
+                // console.log(responseJson)
+                document.querySelector(replylikecounter).innerHTML = `Likes: ${responseJson.replynum_likes}`
+            })
+    })
+}
 
 // show/hide reply forms
 // getElementsByClassName will get every element and the func will need
@@ -169,13 +198,13 @@ for (const likebutton of likebuttons) {
 const replyButtons = document.querySelectorAll('.showreplies');
   function showHideReply(evt) {
 
-    console.log(evt.target.getAttribute('data-postid'))
+    // console.log(evt.target.getAttribute('data-postid'))
     
     
     const postId = evt.target.getAttribute('data-postid');
     const replyDiv = document.getElementById(`replyblock-${postId}`);
 
-    console.log(replyDiv)
+    // console.log(replyDiv)
 
     if (replyDiv.style.display === "none" || replyDiv.style.display === "") {
       replyDiv.style.display = "block";

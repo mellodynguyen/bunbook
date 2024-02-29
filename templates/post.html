@@ -25,8 +25,8 @@
     <div class="post-reacts">
     timestamp: {{ post.timestamp }}
     <br>
-    <h5>Likes: {{ calculatelikes(post.like) }}</h5>
-    <form class="likeapost" action="/like-post" method="post">
+    <h5 id="likecounter{{ post.post_id }}">Likes: {{ calculatelikes(post.like) }}</h5>
+    <form class="likeapost" method="post" data-postid="{{ post.post_id }}">
         <input type="hidden" id="likepostid" name="likepostid" value="{{ post.post_id }}">
         <button class="likebtn" type="submit" name="likebutton">
             <i class="fa-regular fa-heart"></i>

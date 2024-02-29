@@ -82,10 +82,10 @@
         timestamp: {{ post.timestamp }}
         <!-- Post_id: {{ post.post_id }} -->
         <br />
-        <h5>Likes: {{ calculatelikes(post.like) }}</h5>
+        <h5 id="likecounter{{ post.post_id }}">Likes: {{ calculatelikes(post.like) }}</h5>
         
         <div class="post-reacts">
-        <form class="likeapost" action="/like-post" method="post">
+        <form class="likeapost" method="post" data-postid="{{ post.post_id }}">
           <input
             type="hidden"
             id="likepostid"
