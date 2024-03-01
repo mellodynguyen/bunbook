@@ -132,14 +132,14 @@
         time: {{ reply.timestamp }}
         <!-- reply_id {{ reply.reply_id }} -->
         <br />
-        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
+        <h5 id="replylikecounter{{ reply.reply_id }}">Likes: {{ calculatelikes(reply.like) }}</h5>
         <br />
         <!-- Like a reply form -->
         <form
           class="likeareply"
-          action="/like-reply"
           method="post"
           data-replyid="{{ reply.reply_id }}"
+          value ="{{ reply.reply_id }}"
         >
           <input
             type="hidden"

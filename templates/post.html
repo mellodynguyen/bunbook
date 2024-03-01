@@ -43,9 +43,10 @@
     {% for reply in replies %}
     <div class="replyblock">
         <div class="postblock-header">
-        <h5>In reply to:         <a class="user-url" href="/user/{{ reply.reply_post.user.user_id }}"
-            >{{ reply.reply_post.user.screenname }}</a
-          ></h5>
+        <h5>In reply to:
+            <a class="user-url" href="/user/{{ reply.reply_post.user.user_id }}"> 
+            {{ reply.reply_post.user.screenname }}</a>
+        </h5>
 
         <!-- in reply, reply table reply_post = post from Post table -->
         <!-- then user from post table and then grabbed screenname -->
@@ -60,16 +61,17 @@
         </div>
         <div class="post-reacts">
         time: {{ reply.timestamp }}
-        <!-- reply_id {{ reply.reply_id }} -->
-        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
-        <form class="likeareply" action="/like-reply" method="post">
+        
+        <h5 id="replylikecounter{{ reply.reply_id }}">Likes: {{ calculatelikes(reply.like) }}</h5>
+        <!-- Like a reply form -->
+        <form class="likeareply"  method="post" data-replyid="{{ reply.reply_id }}" value ="{{ reply.reply_id }}">
             <input type="hidden" id="likereplyid" name="likereplyid" value="{{ reply.reply_id}}">
             <button class="likebtn" type="submit" name="likebutton">
                 <i class="fa-regular fa-heart"></i>
             </button>
         </form>
         </div>
-        <!-- Like a reply form -->
+        
 
     </div>
     {% endfor %}

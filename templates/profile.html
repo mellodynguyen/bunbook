@@ -126,10 +126,6 @@ block content %}
               <input type="submit" />
             </form>
             <form id="userbio" action="/profile/settings" method="post">
-              <!-- screen/displayname -->
-              <!-- <label for="user-screenname">Display Name</label>
-              <br /> -->
-              <!-- <input type="text" name="screenname" /> -->
               <br />
               <!-- pronouns -->
               <label for="user-pronouns">Pronouns</label>
@@ -146,10 +142,6 @@ block content %}
               <br />
               <input type="text" name="location" value="{{ user.location }}" />
               <br />
-              <!-- Birthday -->
-              <!-- <label for="Birthday">Birthday</label>
-              <br />
-              <input type="date" id="birthday" name="birthday" /> -->
               <input type="submit" />
             </form>
           </div>
@@ -215,7 +207,6 @@ block content %}
         {% endif %}
         <br />
         time: {{ post.timestamp }}
-        <!-- Post_id: {{ post.post_id }} -->
         <br />
         <h5 id="likecounter{{ post.post_id }}">Likes: {{ calculatelikes(post.like) }}</h5>
         
@@ -267,20 +258,21 @@ block content %}
         time: {{ reply.timestamp }}
         <!-- reply_id {{ reply.reply_id }} -->
         <br />
-        <h5>Likes: {{ calculatelikes(reply.like) }}</h5>
+        <h5 id="replylikecounter{{ reply.reply_id }}">Likes: {{ calculatelikes(reply.like) }}</h5>
         <br />
+
         <!-- Like a reply form -->
         <form
           class="likeareply"
-          action="/like-reply"
           method="post"
           data-replyid="{{ reply.reply_id }}"
+          value ="{{ reply.reply_id }}"
         >
           <input
             type="hidden"
             id="likereplyid"
             name="likereplyid"
-            value="{{ reply.reply_id}}"
+            value="{{ reply.reply_id }}"
           />
           <button class="likebtn" type="submit" name="likebutton">
             <i class="fa-regular fa-heart"></i>
