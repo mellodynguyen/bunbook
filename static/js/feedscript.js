@@ -15,7 +15,7 @@ function checkForPosts() {
     fetch('/api/latest-posts')
         .then(response => response.json())
         .then(data => {
-            console.log('Server Response:', data);
+            // console.log('Server Response:', data);
             // if latest_post is in the data object, it will be assigned to latestPosts
             // if it is undefined it will become an empty array
             const latestPosts = data.latest_posts || [];
@@ -24,13 +24,13 @@ function checkForPosts() {
             // const newPosts = latestPosts.filter(post => post.timestamp > latestPostTimestamp);
 
             if (newPosts.length > 0) {
-                console.log('new posts found!');
+                // console.log('new posts found!');
                 // latestPostTimestamp = maxTimestampClient;
                 latestPostTimestamp = Math.max(...latestPosts.map(post => new 
                     Date(post.timestamp).getTime()));
                 displayNewPosts(newPosts);
             } else {
-                console.log('no new posts')
+                // console.log('no new posts')
             }
         
         })
@@ -41,7 +41,7 @@ function checkForPosts() {
 
 
 function displayNewPosts(newPosts) {
-    console.log('Displaying new posts:', newPosts);
+    // console.log('Displaying new posts:', newPosts);
     
     const timelineFeed = document.getElementById('timeline')
 
@@ -87,30 +87,40 @@ setInterval(() => {
 //     checkForPosts();
 // });
 
+// for creating a reply
+const replybuttons = document.querySelectorAll(".createreply")
 
-// create reply and create likes for posts/likes functions for reply form under each post 
-// select all createreply forms by class
-// for each form in this list of forms, on submit (evt), prevent evt.default
-//  so evt.target  
-// fetch 
+for (const replybutton of replybuttons) {
+    replybutton.addEventListener("submit", (evt) => {
 
-// document.querySelectorAll('.createreply').addEventListener('submit', (evt) => {
-//     evt.preventDefault();
+        evt.preventDefault();
 
-//     // use event target to get particular form that was submitted
-//     evt.target.document.querySelector('#postid').value
+        const reply_post_id = evt.target.getAttribute("data-postid");
+        // console.log(reply_post_id)
 
-//     // fetch(route)
-//     fetch('/create-reply')
-//         // response done => response text
-//         .then((response) => response.text())
-//         .then((reply) => {
-//             // add reply to display 
-//             document.querySelector(evt.target.document.querySelector('#postid')
-//                                     .value).insertAdjacentHTML(`${reply}`)
-//         })
-// });
+        const reply_body = evt.target.querySelector(".replyarea").value
+        // console.log(reply_body)
 
+        const reply_object = {post_id: reply_post_id, body: reply_body}
+
+        fetch('/create-reply', {
+            method: 'POST',
+            body: JSON.stringify(reply_object),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => { 
+                // console.log(responseJson)
+                // put reply into hidden reply div
+                // change the text area back to default
+                // implement a replies counter that will dynamically change as well
+                document.querySelector.innerHTML = 'Reply!'
+                
+            })
+    })
+};
 
 // for liking a post 
 // create a variable to store all the selected elements
@@ -233,7 +243,7 @@ function fetchUser(evt) {
     return fetch(`/api/search/${screenname}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            // console.log(data)
             // get the UL from the DOM  - /results-list
             // document.querySelector('.results-list')
             // clear out any existing results from prev. searches

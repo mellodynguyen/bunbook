@@ -54,7 +54,7 @@
 
   <!-- post.like will give a list, we want length of list -->
   <h5 id="likecounter{{ post.post_id }}">Likes: {{ calculatelikes(post.like) }}</h5>
-  <!-- <div class="post-reacts"> -->
+
     <!-- Like a post form -->
     <form class="likeapost" method="post" data-postid="{{ post.post_id }}">
       <input
@@ -69,14 +69,16 @@
     </form>
 
     <!-- Create a Reply form -->
-    <form class="createreply" action="/create-reply" method="post">
+    <form class="createreply" method="post" data-postid="{{ post.post_id }}">
       <input
         type="hidden"
         id="postid"
         name="post_id"
+
         value="{{ post.post_id }}"
       />
-      <textarea class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+      <textarea id="replyarea" class="replyarea rounded" placeholder="Reply!" name="reply"></textarea>
+      
       <button class="likebtn" type="submit"><i class="fa-regular fa-comment-dots"></i></button>
     </form>
     </div>

@@ -226,32 +226,6 @@ def profile_settings():
     return redirect('/profile')
 
 
-# @app.route('/profile/with_replies')
-# def profile_replies():
-#     """Show replies on the user's profile by replies tab"""
-
-#     user_id = session['user_id'].user_id
-
-#     user_replies = Reply.query.filter(Reply.user_id == user_id)
-
-#     user_reply_data = []
-#     # unpack the data to send with jsonify
-#     # front end needs the user's replies, likes, posts it's linked to
-
-#     for reply in user_replies:
-#         user_reply_dict = {}
-
-#         user_reply_dict['user_id'] = reply.user_id
-#         user_reply_dict['screenname'] = reply.screenname
-#         # post it's linked to so we can pass it to the specific post route
-#         user_reply_dict['post_id'] = reply.post_id
-#         user_reply_dict['like'] = reply.like
-#         user_reply_dict['body'] = reply.body
-#         user_reply_dict['timestamp'] = reply.timestamp
-#         user_reply_data.append(user_reply_data)
-
-#     return jsonify()
-
 
 @app.route('/notifications')
 def notifications():
@@ -343,9 +317,9 @@ def create_a_reply():
     
     user_id = session["user_id"]
     
-    post_id = int(request.form.get('post_id'))
+    post_id = int(request.json.get('post_id'))
    
-    body = request.form.get('reply')
+    body = request.json.get('body')
    
     timestamp = datetime.datetime.now()
     
@@ -366,7 +340,7 @@ def create_a_reply():
     db.session.add(notification)
     db.session.commit()
 
-    return redirect('/home')
+    return jsonify({'post_id': post_id, 'body': body, 'timestamp': timestamp})
 
 
 @app.route('/like-post', methods=['POST'])
